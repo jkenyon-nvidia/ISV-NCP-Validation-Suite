@@ -1,0 +1,1357 @@
+# NCP Validation Test Suite - Hierarchical Test Data
+# Structure: Domain > Function > Description > Tests
+---
+domains:
+- name: Foundational Services
+  functions:
+  - name: Image Registry
+    descriptions:
+    - text: Stores and distributes boot images, VM images, containers, and deployment artifacts. Acts as a trusted source for all deployable assets.
+      example: GCP Artifact Registry + Images
+      tests:
+      - summary: CRUD an custom OS image (iso file) (Upload an ISO file if supported, or remote URL if supported).
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-164
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#37 (closed)"
+        - "#38 (closed)"
+      - summary: "CRUD an OS install configuration (e.g. iPXE config like Carbide)"
+        min_req: false
+        priority: P0
+        jira_ids: ISVP-165
+        dependency: YTL
+        milestone: M1
+        github_issues:
+        - "#39 (closed)"
+      - summary: CRUD a custom VM image
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-166
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#40 (closed)"
+      - summary: CRUD (get, list, create, delete) custom OS images for fast boot (raw, qcow2, img, etc) for BM/VM
+        min_req: true
+        priority: P0
+        jira_ids: "GH#104"
+        milestone: M3
+        github_issues:
+        - "#104 (closed)"
+      - summary: Check that an OS image can be installed on a BMaaS system
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-167
+        dependency: YTL
+        milestone: M1
+        github_issues:
+        - "#41 (closed)"
+      - summary: Check that an OS install configuration can be installed on a BMaaS system
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-168
+        dependency: YTL
+        milestone: M1
+        github_issues:
+        - "#43 (closed)"
+      - summary: Check that a VM image can be installed onto a VMaaS system
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-169
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#44 (closed)"
+      - summary: Verify that an OS image (iso file) with full NVIDIA support is readily available
+        min_req: false
+        priority: P1
+        milestone: M4
+      - summary: Verify that an OS install configuration (e.g. iPXE config like Carbide) with full NVIDIA support is readily available
+        min_req: false
+        priority: P1
+        milestone: M4
+      - summary: Verify that an VM image with full NVIDIA support is readily available
+        min_req: false
+        priority: P1
+        milestone: M4
+  - name: Key Secret Mgmt
+    descriptions:
+    - text: Securely stores and manages cryptographic keys, secrets, and certificates. Supports key rotation
+      example: AWS Secrets Manager / KMS
+      tests:
+      - summary: CRUD an SSH/Teleport compatible public key for system login
+        min_req: false
+        priority: P1
+        dependency: YTL
+        milestone: M4
+      - summary: Spin up an instance which uses a specified key
+        min_req: false
+        milestone: M5
+      - summary: Access other components via a specified key as possible (SOL, Network devices)
+        min_req: false
+        milestone: M5
+  - name: Identity and Asset Mgmt (IAM)
+    descriptions:
+    - text: Manages users, service identities, roles, and permissions across tenants and services. Forms the security foundation of the platform.
+      example: "AWS: IAM"
+      tests:
+      - summary: Create user and log in as that user
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-170
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#20 (closed)"
+        - "#21 (closed)"
+      - summary: Delete user
+        min_req: false
+        priority: P0
+        jira_ids: ISVP-171
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#23 (closed)"
+      - summary: TODO for P1 validate access
+        min_req: false
+        priority: P1
+        dependency: YTL
+        milestone: M5
+  - name: DCIM
+    descriptions:
+    - text: Monitors and manages physical assets such as racks (servers, gpus, networking) power, and cooling
+      example: Nautobot
+      tests:
+      - summary: TODO
+        min_req: false
+        priority: P3
+        milestone: M5
+  - name: DDI
+    descriptions:
+    - text: core network services for name resolution, IP allocation, and address lifecycle management
+      example: GCP Cloud DNS + IPAM
+      tests:
+      - summary: TODO
+        min_req: false
+        priority: P0
+        dependency: MiniCloud
+        milestone: M4
+      - summary: Check that IP addresses are managed by the platform, and that DHCP is able to provide IP addresses
+        min_req: false
+        priority: P0
+        dependency: MiniCloud
+        milestone: M4
+        github_issues:
+        - "#131 (closed)"
+      - summary: "Check that IP addresses are managed sensibly as VPCs are configured (Move to SDN section?)"
+        min_req: false
+        priority: P0
+        dependency: MiniCloud
+        milestone: M4
+        github_issues:
+        - "#132 (closed)"
+  - name: "Network Underlay & Mgmt"
+    descriptions:
+    - text: Brings up the physical network fabric for Day 0, base configuration, and network OS installation. Manages switch OS versions, compliance, and safe upgrades over time. Provides base network that
+        overlays and tenants are built upon.
+      example: Netris
+      tests:
+      - summary: TODO
+        min_req: false
+        priority: P0
+        dependency: MiniCloud
+        milestone: M4
+  - name: Resource Database
+    descriptions:
+    - text: Resource Inventory for useable resources withing the data center
+      tests:
+      - summary: TODO
+        min_req: false
+        priority: P1
+        dependency: YTL
+        milestone: M4
+- name: Infrastructure and Data Services
+  functions:
+  - name: Control Plane accessible
+    descriptions:
+    - text: Control plane can be accessed
+      tests:
+      - summary: Make sure we can ping the control plane, or get a heart beat/status code
+        min_req: false
+        priority: P0
+        jira_ids: ISVP-172
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#26 (closed)"
+        - "#27 (closed)"
+      - summary: Control Plane can be upgraded (measure impact)
+        min_req: false
+        priority: P2
+        dependency: YTL
+        milestone: M5
+      - summary: Access keys can be created, received, used to log in
+        min_req: false
+        priority: P0
+        jira_ids: ISVP-173
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#28 (closed)"
+      - summary: Access keys can expire or be disabled
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-174
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#29 (closed)"
+      - summary: Create tenants
+        min_req: false
+        priority: P0
+        jira_ids: ISVP-175
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#30 (closed)"
+      - summary: Retrieve list of tenants
+        min_req: false
+        priority: P0
+        jira_ids: ISVP-176
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#31 (closed)"
+      - summary: Retrieve info about individual tenant
+        min_req: false
+        priority: P0
+        jira_ids: ISVP-177
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#32 (closed)"
+        - "#33 (closed)"
+      - summary: Delete Tenant
+        min_req: false
+        priority: P0
+        jira_ids: ISVP-178
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#34 (closed)"
+      - summary: Add user to tenant
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-179
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#35 (closed)"
+  - name: Hardware ingestion
+    descriptions:
+    - text: Makes sure that all hardware under test has been ingested
+      tests:
+      - summary: Makes sure that all hardware under test has been ingested, and matches the provided hardware
+        min_req: false
+        priority: P1 (check w/ ISVs)
+        dependency: MiniCloud
+        milestone: M4
+        github_issues:
+        - "#133 (open)"
+      - summary: Make sure that a device can be removed from the system
+        min_req: false
+        priority: P1
+        dependency: MiniCloud
+        milestone: M4
+      - summary: Makes sure that all hardware under test has been ingested, and matches the provided hardware
+        min_req: false
+        priority: P0
+        dependency: MiniCloud
+        milestone: M4
+      - summary: Make sure that a device can be removed from the system
+        min_req: false
+        priority: P1
+        dependency: MiniCloud
+        milestone: M4
+  - name: Attestation
+    descriptions:
+    - text: ""
+      tests:
+      - summary: Check that hardware passes nonce check
+        min_req: false
+        priority: P1
+        dependency: MiniCloud
+        milestone: M5
+      - summary: Check that OS is approved
+        min_req: false
+        priority: P1
+        dependency: MiniCloud
+        milestone: M5
+      - summary: Check that TPM Configuration can be set per host
+        min_req: false
+        priority: P1
+        dependency: MiniCloud
+        milestone: M5
+      - summary: Check that an updated BIOS is installed on all hardware
+        min_req: false
+        priority: P1
+        dependency: MiniCloud
+        milestone: M5
+      - summary: Check that the updated firmware is installed
+        min_req: true
+        priority: P1
+        dependency: MiniCloud
+        milestone: M4
+  - name: "Compute Services: BMaaS"
+    descriptions:
+    - text: Supports the basic lifecycle of Bare Metal nodes
+      example: AWS EC2/Forge
+      tests:
+      - summary: Create a Bare Metal node
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-180
+        dependency: YTL
+        milestone: M1
+        github_issues:
+        - "#49 (closed)"
+      - summary: "Get info about a specific Bare Metal node, including if it is ready for use.
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-181
+        dependency: YTL
+        milestone: M1
+      - summary: Get a list of all Bare Metal nodes in a VPC
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-182
+        dependency: YTL
+        milestone: M1
+        github_issues:
+        - "#52 (closed)"
+      - summary: Delete a Bare Metal node
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-183
+        dependency: YTL
+        milestone: M1
+        github_issues:
+        - "#53 (closed)"
+      - summary: Confirm sanitization on delete - Tenant View
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-184
+        dependency: YTL
+        milestone: M1
+        github_issues:
+        - "#54 (closed)"
+      - summary: Confirm sanitization on delete - Low Level
+        min_req: true
+        priority: P0
+        dependency: MiniCloud
+        milestone: M4
+        github_issues:
+        - "#134 (open)"
+      - summary: Topology-based placement (waiting on gustavo)
+        min_req: true
+        priority: P0
+        jira_ids: "GH#105"
+        dependency: MiniCloud
+        milestone: M3
+        github_issues:
+        - "#105 (closed)"
+    - text: Once created, nodes can be accessed for usage, and have the high level support controls of reboot, reinstall.
+      example: AWS EC2/Forge
+      tests:
+      - summary: A running node can be accessed via SSH/Teleport for further configuration
+        min_req: false
+        priority: P0
+        jira_ids: ISVP-185
+        dependency: YTL
+        milestone: M1
+        github_issues:
+        - "#48 (closed)"
+        - "#56 (closed)"
+      - summary: A running node can be rebooted in case of issue
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-186
+        dependency: "YTL?"
+        milestone: M1
+        github_issues:
+        - "#50 (closed)"
+        - "#57 (closed)"
+      - summary: A running node can be power-cycled in case of issue
+        min_req: true
+        priority: P0
+        dependency: MiniCloud
+        milestone: M4
+        github_issues:
+        - "#135 (closed)"
+      - summary: "REMOVED: A node can be reinstalled from its configured stock operating system"
+        min_req: false
+        priority: P0
+        jira_ids: ISVP-187
+        dependency: YTL
+        milestone: M1
+        github_issues:
+        - "#58 (closed)"
+        - "#69 (closed)"
+      - summary: A running node can be powered off (Without being destroyed)
+        min_req: true
+        notes: MinAPI
+        priority: P0
+        jira_ids: "GH#106"
+        dependency: MiniCloud
+        milestone: M3
+        github_issues:
+        - "#106 (closed)"
+      - summary: Support for cloud-init and instance metadata discovery via link-local addresses (e.g. 169.254.169.254) or virtual devices
+        min_req: true
+        notes: MinAPI
+        priority: P0
+        jira_ids: "GH#107"
+        milestone: M3
+        github_issues:
+        - "#107 (closed)"
+      - summary: A powered off node can be powered back on
+        min_req: true
+        notes: MinAPI
+        priority: P0
+        jira_ids: "GH#108"
+        dependency: MiniCloud
+        milestone: M3
+        github_issues:
+        - "#108 (closed)"
+      - summary: Support for user-defined tags/labels and cloud-init metadata on instances.
+        min_req: true
+        notes: MinAPI
+        dependency: YTL
+        milestone: M3 .5
+    - text: Nodes will be able to access expected resources on the local networks
+      example: AWS EC2/Forge
+      tests:
+      - summary: Check the health and status of the DPU on instantiation
+        min_req: false
+        priority: P0
+        dependency: MiniCloud
+        milestone: M4
+        github_issues:
+        - "#136 (open)"
+      - summary: Nodes can communicate across ethernet, infiniband, and NVLink
+        min_req: false
+        priority: P0
+        jira_ids: ISVP-188
+        dependency: YTL
+        milestone: M1
+        github_issues:
+        - "#60 (closed)"
+    - text: "Observability & Debug"
+      example: AWS EC2/Forge
+      tests:
+      - summary: Check for any per-host status log over time.
+        min_req: false
+        notes: REVIEW
+        priority: P1
+        milestone: M5
+      - summary: Serial console access is required (read-only sufficient, interactive preferred)
+        min_req: true
+        priority: P0
+        jira_ids: "GH#109"
+        dependency: "YTL??"
+        milestone: M3
+        github_issues:
+        - "#109 (closed)"
+      - summary: Verify NVIDIA hardware
+        min_req: false
+        priority: P0
+        jira_ids: ISVP-189
+        dependency: YTL
+        milestone: M1
+        github_issues:
+        - "#61 (closed)"
+      - summary: GPU Stress workload
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-190
+        dependency: YTL
+        milestone: M1
+        github_issues:
+        - "#63 (closed)"
+        - "#68 (closed)"
+      - summary: Nim Inference jobs
+        min_req: true
+        notes: TODO
+        priority: P0
+        jira_ids: ISVP-191
+        dependency: YTL
+        milestone: M1
+        github_issues:
+        - "#64 (closed)"
+        - "#82 (closed)"
+      - summary: NCCL tests
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-192
+        dependency: YTL
+        milestone: M1
+        github_issues:
+        - "#65 (closed)"
+      - summary: Training workload test
+        min_req: true
+        notes: TODO
+        priority: P0
+        jira_ids: ISVP-193
+        dependency: YTL
+        milestone: M1
+        github_issues:
+        - "#66 (closed)"
+  - name: "Compute Service: VMaaS"
+    descriptions:
+    - text: Supports the basic lifecycle of VM nodes
+      tests:
+      - summary: Create a VM node
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-194
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#42 (closed)"
+      - summary: Get info about a specific VM node, including if it is ready for use (Blocked on John)
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-195
+        dependency: YTL
+        milestone: M2
+        github_issues:
+        - "#51 (closed)"
+      - summary: Get a list of all VM nodes in a VPC
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-196
+        dependency: YTL
+        milestone: M1
+        github_issues:
+        - "#45 (closed)"
+      - summary: Delete a VM node
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-197
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#46 (closed)"
+      - summary: Confirm sanitization on delete
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-198
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#47 (closed)"
+    - text: Once created, VM nodes can be accessed for usage, and have the high level support controls of reboot, reinstall
+      tests:
+      - summary: A running node can be accessed via SSH/Teleport for further configuration
+        min_req: false
+        priority: P0
+        jira_ids: ISVP-199
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+      - summary: A running node can be rebooted in case of issue
+        min_req: false
+        priority: P0
+        jira_ids: ISVP-200
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+      - summary: ~~A node can be reinstalled from its configured stock operating system~~
+        min_req: false
+        priority: ~~P0~~
+        jira_ids: ~~ISVP-201~~
+        dependency: ~~YTL~~
+        milestone: ~~M1~~
+      - summary: A running VM can be stopped (Without being destroyed)
+        min_req: true
+        notes: MinAPI
+        priority: P0
+        jira_ids: "GH#110"
+        dependency: YTL
+        milestone: M3
+        github_issues:
+        - "#110 (closed)"
+      - summary: A powered off VM can be started
+        min_req: true
+        notes: MinAPI
+        priority: P0
+        jira_ids: "GH#111"
+        dependency: YTL
+        milestone: M3
+        github_issues:
+        - "#111 (closed)"
+      - summary: Support for user-defined tags/labels and cloud-init metadata on instances.
+        min_req: true
+        notes: MinAPI
+        priority: P0
+        jira_ids: "GH#112"
+        dependency: YTL
+        milestone: M3
+        github_issues:
+        - "#112 (closed)"
+      - summary: Support for cloud-init and instance metadata discovery via link-local addresses (e.g. 169.254.169.254) or virtual devices
+        min_req: true
+        priority: P0
+        jira_ids: "GH#113"
+        milestone: M3
+        github_issues:
+        - "#113 (closed)"
+    - text: Quota should be enforced
+      tests:
+      - summary: Noisy Neighbor CPU/GPU tests
+        min_req: false
+        priority: P2
+      - summary: Tenant cannot allocate more VMs than their quota allows
+        min_req: false
+        priority: P2
+    - text: The underlying system allows VMs to access the GPU, with high performance, and are running with the correct parameters for optimal performance
+      tests:
+      - summary: Check that the host OS is a known acceptable image (like Ubuntu/DGXOS)
+        min_req: false
+        priority: P0
+        jira_ids: ISVP-202
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#55 (closed)"
+      - summary: Check that the GPU is visible and accessible from the VM
+        min_req: false
+        priority: P0
+        jira_ids: ISVP-203
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#59 (closed)"
+      - summary: Check that the correct Linux Kernel, libvirt, sbios, and NVIDIA drivers are installed
+        min_req: false
+        priority: P0
+        jira_ids: ISVP-204
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#62 (closed)"
+      - summary: Check that vEGM ist configured correctly
+        min_req: false
+        priority: P0
+        jira_ids: ISVP-205
+        dependency: YTL
+        milestone: M1
+      - summary: Check that vCPU pinning is set correctly, PCI bus is configured correctly
+        min_req: false
+        notes: Does this include GPU Passthrough
+        priority: P0
+        jira_ids: ISVP-206
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#67 (closed)"
+      - summary: "TODO: More things from the \"NVIDIA Grace I/O Virtualization Guide\""
+        min_req: false
+        priority: P1
+        dependency: YTL
+        milestone: M5
+    - text: Can run AI/ML Jobs
+      tests:
+      - summary: GPU Stress workload
+        min_req: false
+        priority: P0
+        jira_ids: ISVP-207
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+      - summary: Nim Inference jobs
+        min_req: false
+        priority: P0
+        jira_ids: ISVP-208
+        dependency: YTL
+        milestone: M1
+      - summary: NCCL tests
+        min_req: false
+        priority: P0
+        milestone: M5
+    - text: nodes will be able to access expected resources on the local networks
+      example: AWS EC2/Forge
+      tests:
+      - summary: Nodes can communicate across ethernet, infiniband, and NVLink
+        min_req: false
+        priority: P0
+        dependency: YTL
+        milestone: M5
+      - summary: TODO
+        min_req: false
+    - text: "Observability & Debug"
+      tests:
+      - summary: Serial console access is required (read-only sufficient, interactive preferred)
+        min_req: true
+        priority: P0
+        jira_ids: "GH#114"
+        milestone: M3
+        github_issues:
+        - "#114 (closed)"
+  - name: SDN Controller
+    descriptions:
+    - text: Controls software-defined networking overlays and fabric behavior to match the compute-on-demand requirements. Enables network segmentation, isolation, dynamic network configuration, and security
+        groups.
+      tests:
+      - summary: Create a VPC
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-209
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#11 (closed)"
+      - summary: Retrieve a VPC
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-210
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#12 (closed) # TODO: verify match (85%)"
+      - summary: Update a VPC
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-211
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#13 (closed)"
+      - summary: Delete a VPC
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-212
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#14 (closed)"
+      - summary: Verify that a VPC has an exclusive subnet
+        min_req: false
+        priority: P0
+        jira_ids: ISVP-213
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#16 (closed)"
+      - summary: Verify that nodes in two VPCs cannot communicate over the N/S (TAN) network
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-214
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#17 (closed)"
+      - summary: Verify that nodes in two VPCs cannot communicate over the E/W (CIN) network
+        min_req: true
+        priority: P0
+        jira_ids: ISVP-215
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#18 (closed)"
+      - summary: Support non-conflicting Bring-Your-Own-IP (including 7.0.0.0/8)
+        min_req: true
+        priority: P0
+        jira_ids: "GH#115"
+        milestone: M3
+        github_issues:
+        - "#115 (closed)"
+      - summary: Support Stabe Private IP allocations, where if a VM crashes and restarts the same IP address remains pinned until the node is deleted
+        min_req: true
+        priority: P0
+        jira_ids: "GH#116"
+        milestone: M3
+        github_issues:
+        - "#116 (closed)"
+      - summary: "Atomically switch a floating private IP between nodes via API within <10 seconds without requiring an instance reboot."
+        min_req: true
+        priority: P0
+        jira_ids: "GH#117"
+        milestone: M3
+        github_issues:
+        - "#117 (closed)"
+      - summary: "Localized DNS: Support for custom, localized DNS settings to enable internal domain resolution to private endpoints (e.g. storage endpoints)"
+        min_req: true
+        priority: P0
+        jira_ids: "GH#118"
+        milestone: M3
+        github_issues:
+        - "#118 (closed)"
+      - summary: "Support for VPC peering with full bandwidth and no \"hairpin\" routing."
+        min_req: true
+        priority: P0
+        jira_ids: "GH#119"
+        milestone: M3
+        github_issues:
+        - "#119 (closed)"
+      - summary: Create a Security Group
+        min_req: true
+        notes: SDN03
+      - summary: Retrieve a Security Group/list Security Groups
+        min_req: true
+        notes: SDN03
+      - summary: Update a Security Group
+        min_req: true
+        notes: SDN03
+      - summary: Delete a Security Group
+        min_req: true
+        notes: SDN03
+      - summary: NVLink Partitioning
+        min_req: false
+        priority: P0
+        jira_ids: ISVP-216
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+        github_issues:
+        - "#19 (closed)"
+      - summary: "NVLink: Create a new partition; verify success response with partition key."
+        min_req: false
+        dependency: YTL
+        milestone: M4
+      - summary: "NVLink: List partitions; retrieve a specific partition by partition ID"
+        min_req: false
+        dependency: YTL
+        milestone: M4
+      - summary: "NVLink: Delete an empty partition (no instances); retrieve by ID and verify not found."
+        min_req: false
+        dependency: YTL
+        milestone: M4
+      - summary: "NVLink: Create a partition, create instance in that partition, make dure the instance becomes ready, delete instance, verify GPUs removed from partition."
+        min_req: false
+        dependency: YTL
+        milestone: M4
+      - summary: "NVLink: Create partition, create 2 instances, verify both share the same nvlink_partition_id and both GPUs are reported for that partition"
+        min_req: false
+        dependency: YTL
+        milestone: M4
+      - summary: "IMEX: Assert nvidia-imex and nvidia-imex-ctl packages are installed and nvidia-imex.service unit is registered with systemd."
+        min_req: false
+        dependency: YTL
+        milestone: M4
+      - summary: "IMEX: Start nvidia-imex via systemctl start nvidia-imex and assert the service reaches active/ready state."
+        min_req: false
+        dependency: YTL
+        milestone: M4
+      - summary: "IMEX: Stop nvidia-imex via systemctl stop nvidia-imex and assert clean shutdown (other nodes show disabled node status)."
+        min_req: false
+        dependency: YTL
+        milestone: M4
+      - summary: "IMEX: Enable IMEX at boot with systemctl enable nvidia-imex, reboot, and confirm IMEX starts automatically."
+        min_req: false
+        dependency: YTL
+        milestone: M4
+      - summary: "IMEX: After all nodes start IMEX, query domain state via nvidia-imex-ctl -N and assert state is UP, fully connected matrix"
+        min_req: false
+        dependency: YTL
+        milestone: M4
+      - summary: "IMEX: With IMEX_ENABLE_AUTH_ENCRYPTION=0, form a multi-node domain and assert connectivity without any auth/encryption."
+        min_req: false
+        dependency: YTL
+        milestone: M4
+      - summary: "IMEX: Enable IMEX_ENABLE_AUTH_ENCRYPTION=1 with SSL_TLS mode, provide valid server/client certs, and assert mutual authentication and encrypted communication."
+        min_req: false
+        dependency: YTL
+        milestone: M4
+      - summary: "IMEX: Enable GSSAPI/Kerberos mode (GSS_AUTH_ENCRYPT), configure KDC/keytabs, and assert mutual auth + encryption between nodes."
+        min_req: false
+        dependency: YTL
+        milestone: M4
+      - summary: "IMEX: IMEX/K8s: Submit a workload requesting a ComputeDomain; assert ComputeDomain pods are created on each allocated node."
+        min_req: false
+        dependency: YTL
+        milestone: M4
+      - summary: "IMEX: From workload pods in a ComputeDomain run nvbandwidth-test-job"
+        min_req: false
+        dependency: YTL
+        milestone: M4
+      - summary: "IMEX: After workload completes, assert ComputeDomain and associated IMEX resources are cleaned up."
+        min_req: false
+        dependency: YTL
+        milestone: M4
+  - name: Metadata Service
+    descriptions:
+    - text: shared service source of truth for resource metadata such as nodes, GPUs, topology, and ownership. Enables scheduling, automation, and lifecycle management.
+      example: GCP Resource Manager APIs
+      tests:
+      - summary: TODO
+        min_req: false
+        priority: P1
+        dependency: YTL
+        milestone: M4
+  - name: Cloud Control Plane
+    descriptions:
+    - text: Primary access mechanism for IaaS, provding provision and manage of compute, networking, and storage.
+      example: AWS EC2 Control Plane
+      tests:
+      - summary: Needs to have an API we can access from our tests to do actions
+        min_req: false
+        priority: P0
+        dependency: "?"
+        milestone: M4
+      - summary: "fleet management API: proivde full set of information requested below: Node ID (Unique identifier for a GPU node) Health State (Healthy/Unhealthy classification) Instance ID (Identifier\
+          \ for virtual workload) Creation Timestamp (Time workload/node was created) Hardware Type (Descriptor for the hardware model) GPU Count (Number of GPUs per node) Top-levelAccount/ID (Identifier\
+          \ for the top-level organization/account) Sub-LevelProject/ID (Identifier for the nested project/sub-account) In Use (True/False status indicating if the GPU Node is turned on and in use) Region\
+          \ (Region of the data center where nodes are deployed)"
+        min_req: false
+      - summary: "Resource discovery API: newly delivered capacity must be discoverable. This \"Resource Index\" must provide a resource stable identifer and some information on why it’s being provided.\
+          \ This may be polled regularly"
+        min_req: false
+      - summary: TODO
+        min_req: false
+  - name: Load Balancing
+    descriptions:
+    - text: Distributes traffic across services (e.g. inference endpoints) for availability and scale.
+      example: AWS Network Load Balancer
+      tests:
+      - summary: CRUD a load balancer
+        min_req: false
+        priority: P2
+        dependency: YTL
+      - summary: Verify that traffic is distributed across multiple nodes
+        min_req: false
+        dependency: YTL
+      - summary: Verify that nodes can be marked as down or up (for rolling deployments/etc)
+        min_req: false
+      - summary: Verify that no traffic is dropped during outages
+        min_req: false
+        dependency: YTL
+  - name: Break-Fix
+    descriptions:
+    - text: A break-fix service works with a variety of components to detect, triage, remediate, and validate nodes in an AI factory. The critical focus here is on the GPU nodes, but the system can scale
+        beyond.
+      example: Lazarus, Shoreline
+      tests:
+      - summary: Check that GPUd or Sentinel is running
+        min_req: false
+        priority: P1
+        dependency: YTL
+      - summary: Verify that Tenants can be notified, by some communication system, of planned future node maintenance
+        min_req: false
+        dependency: YTL
+      - summary: Verify that Tenants can be notified, by some communication system, of immediate node failure
+        min_req: false
+        dependency: YTL
+- name: Data Services
+  functions:
+  - name: SDS Controller
+    descriptions:
+    - text: Manages software-defined storage services and policies. Orchestrates provisioning, tiers, and resiliency.
+      example: "AWS: EBS + FSx backend control planes"
+      tests:
+      - summary: TODO
+        min_req: false
+        priority: P2
+        dependency: YTL
+  - name: Parallel File System Services
+    descriptions:
+    - text: high performance file system optimized for AI and HPC workloads
+      tests:
+      - summary: TODO
+        min_req: false
+        priority: P2
+        dependency: YTL
+  - name: Object Storage Service
+    descriptions:
+    - text: durable, scalable object storage for things like datasets, model artifacts, logs, backups.
+      example: S3
+      tests:
+      - summary: TODO
+        min_req: false
+        priority: P2
+        dependency: YTL
+  - name: Block Storage Services
+    descriptions:
+    - text: persistent block volumes for a wide range of uses
+      example: AWS EBS, GCP Persistent Disk
+      tests:
+      - summary: TODO
+        min_req: false
+        priority: P2
+        dependency: YTL
+  - name: Cache Services
+    descriptions:
+    - text: in-memory data store for frequently used data
+      example: ElastiCache
+      tests:
+      - summary: TODO
+        min_req: false
+        priority: P2
+        dependency: YTL
+  - name: Vector Store
+    descriptions:
+    - text: stores and indexes embeddings for semantic search and RAG generation
+      example: Vertex AI Vector Search
+      tests:
+      - summary: TODO
+        min_req: false
+        priority: P2
+        dependency: YTL
+  - name: Relational Database
+    descriptions:
+    - text: structured database (SQL) service
+      example: GCP Cloud SQL
+      tests:
+      - summary: TODO
+        min_req: false
+        priority: P2
+        dependency: YTL
+- name: Workload Orchestration
+  functions:
+  - name: Backup and Recovery
+    descriptions:
+    - text: Centralized managed service to automate and govern data backup across services
+      example: AWS backup
+      tests:
+      - summary: TODO
+        min_req: false
+        priority: P2
+        milestone: M4
+  - name: Model Registry
+    descriptions:
+    - text: storage with versioning for models and AI artifacts
+      example: AWS Sagemaker Model Registry
+      tests:
+      - summary: TODO
+        min_req: false
+        priority: P2
+  - name: Slurm Control Plane
+    descriptions:
+    - text: control plane to schedule and manage large-scale GPU batch training with SLURM semantics.
+      example: AWS ParallelCluster
+      tests:
+      - summary: Create a SLURM instance using the software platform
+        min_req: false
+        notes: "Mostly done?"
+        priority: P0
+        jira_ids: T10,T11,T12,T13
+        dependency: YTL
+        milestone: M0
+      - summary: SlurmInfoAvailable
+        min_req: false
+        notes: ✅ Done
+        priority: P0
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+      - summary: SlurmPartition cpu and gpu
+        min_req: false
+        notes: ✅ Done
+        priority: P0
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+      - summary: SlurmJobSubmission
+        min_req: false
+        notes: ✅ Done
+        priority: P0
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+      - summary: SlurmGpuAllocation 1gpu and 2gpu
+        min_req: false
+        notes: ✅ Done
+        priority: P0
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+      - summary: SlurmNodeJobExecution cpu and gpu
+        min_req: false
+        notes: ✅ Done
+        priority: P0
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+      - summary: SlurmGpuStressWorkload
+        min_req: false
+        notes: ✅ Done
+        priority: P0
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+      - summary: SlurmNcclMultiNodeWorkload
+        min_req: false
+        notes: ✅ Done
+        priority: P0
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+      - summary: SlurmSbatchWorkload gpu and cpu
+        min_req: false
+        notes: ✅ Done
+        priority: P0
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+      - summary: SlurmSbatchWorkload-inline
+        min_req: false
+        notes: ✅ Done
+        priority: P0
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+  - name: Managed Kubernetes Control Plane
+    descriptions:
+    - text: Tenant-isolated Kubernetes control planes for managing k8s workloads. does placement, networking, lifecyle mgmt.
+      example: AWS EKS, GCP GKE
+      tests:
+      - summary: Create a K8s Instance using the software platform (CLI, Terraform)
+        min_req: true
+        notes: "Mostly done?"
+        priority: P0
+        jira_ids: T1,T2,T3,T4,T5
+        dependency: YTL
+        milestone: M0
+    - text: Full lifecycle management
+      tests:
+      - summary: Run through all the steps of the k8s lifecycle management, including user-initated CP update
+        min_req: true
+        milestone: M4
+      - summary: "Add: The control plane should automatically add more capacity when load increases"
+        min_req: true
+      - summary: "Add: Pin Control Plane instances to a specific count to handle a particular load-limit"
+        min_req: true
+    - text: Control Plane Isolation
+      tests:
+      - summary: per tenant k8s control plane outside of the tenant cluster/VPC
+        min_req: true
+        milestone: M4
+      - summary: Be able to run k8s workloads
+        min_req: true
+        notes: ✅ Done
+        priority: P0
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+      - summary: K8s Nim Inference
+        min_req: false
+        notes: ✅ Done
+        priority: P0
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+      - summary: K8s Nim Helm
+        min_req: false
+        notes: ✅ Done
+        priority: P0
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+    - text: Topology based placement
+      tests:
+      - summary: "K8s Nccl - (Brad: did you use DRA?)"
+        min_req: true
+        priority: P0
+    - text: k8s upstream proxy
+      tests:
+      - summary: validate adherence to upstream proxy requirements (service to pod load balancing, acces to internal services)
+        min_req: true
+        notes: k8s05
+    - text: Dynamic Resource Allocaiton
+      tests:
+      - summary: verify that the k8s cluster supports the DRA API (resources.k8s.io) to get GPUs on the same nvlink
+        min_req: true
+        notes: k8s06/22
+    - text: Run k8s conformance tests
+      tests:
+      - summary: "get versions, topology, core APIs by: (a) pass CNCF k8s conformance: https://github.com/cncf/k8s-conformance (b) add AI conformance: [https://github.com/cncf/k8s-ai-conformance](https://github.com/cncf/k8s-ai-conformance)"
+        min_req: true
+        notes: k8s01
+    - text: k8s service account OIDC
+      tests:
+      - summary: test that the service account can be authorized with OIDC
+        min_req: true
+    - text: Test support for CRDs and Validating/Mutating Admission Controllers (webhooks)
+      tests:
+      - summary: create a CRD, create webhook, and test validation/mutation requirement
+        min_req: true
+        notes: k8s19
+    - text: "TODO: L3 networking logging"
+      tests:
+      - summary: Verify that pod-to-pod L3 traffic flow logs are available and queryable
+        min_req: true
+        notes: K8s16
+    - text: CNI Compliance
+      tests:
+      - summary: Apply a NetworkPolicy; verify pod connectivity is restricted as expected; verify IPv4 and IPv6 addresses are assigned on dual-stack nodes
+        min_req: true
+        notes: K8s20
+    - text: "TODO: Dynamic provisioning, snapshots, and resizing"
+      tests:
+      - summary: "TODO: Helm version"
+        min_req: true
+        notes: K8s21
+      - summary: "TODO: Kustomize version"
+        min_req: true
+        notes: K8s21
+    - text: NVIDIA Operator support
+      tests:
+      - summary: "TODO: Compatibility with the mainline NVIDIA GPU Operator"
+        min_req: true
+        notes: K8S23
+      - summary: "TODO: Can install custom GPU operator and drivers"
+        min_req: true
+        notes: K8S23
+  - name: Power Policy Management
+    descriptions:
+    - text: Control plane to maange power allocation (re-allocation) based on need and availability
+      example: Boost and Flex (DPS)
+      tests:
+      - summary: TODO
+        min_req: false
+        priority: P2
+        dependency: "?"
+- name: "AI Platform & User Access"
+  functions:
+  - name: Host API Gateway
+    descriptions:
+    - text: "Service control plane \"front door\" that enforces authn/authz via IAM"
+      example: AWS/GCP API Gateway
+      tests:
+      - summary: TODO
+        min_req: false
+        priority: P2
+  - name: Al Platform 1..N Control Planes
+    descriptions:
+    - text: "Placeholder for all AI platform CPs you might run. E.g. Run:ai, NVCF, Redhat Inference Server"
+      tests:
+      - summary: TODO
+        min_req: false
+        priority: P2
+  - name: Web Management Dashboard
+    descriptions:
+    - text: ""
+      tests:
+      - summary: TODO
+        min_req: false
+        priority: P2
+        dependency: YTL
+        milestone: M5
+- name: Observability
+  functions:
+  - name: Observability Collectors
+    descriptions:
+    - text: ""
+      tests:
+      - summary: Validate that an OTel endpoint is provided and some data can be pulled from it
+        min_req: false
+        notes: ✅ Done
+        priority: P0
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+      - summary: Logging information about the control plane is available
+        min_req: false
+        notes: ✅ Done
+        priority: P0
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+      - summary: Logging information from instances
+        min_req: false
+        notes: ✅ Done
+        priority: P0
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+      - summary: Alerts can be issued by the system in case of problems
+        min_req: false
+        notes: ✅ Done
+        priority: P0
+        dependency: YTL
+        milestone: M0
+        release: "0.2.0"
+  - name: Telemetry / Data Lakes
+    descriptions:
+    - text: ""
+      tests:
+      - summary: TODO
+        min_req: false
+        priority: P1
+        dependency: YTL
+      - summary: Read only access to a BMaaS system's serial console
+        min_req: true
+        notes: MinAPI
+        priority: P0
+        jira_ids: "GH#120"
+        dependency: MiniCloud
+        milestone: M3
+        github_issues:
+        - "#120 (closed)"
+      - summary: Read only access to a VM serial console
+        min_req: true
+        notes: MinAPI
+        priority: P0
+        jira_ids: "GH#121"
+        dependency: YTL
+        milestone: M3
+        github_issues:
+        - "#121 (closed)"
+- name: Benchmarking
+  functions:
+  - name: Exemplar
+    descriptions:
+    - text: Run a mini-cloud configuration of Exemplar benchmarks
+      tests:
+      - summary: "Simulate Examplar across: 8, 16, 32 GPUs (might be 18, 36 - need to check availalbe targets)"
+        min_req: true
+      - summary: "NVMesh checks?"
+        notes: REVIEW
+      - summary: "IPv4 and IPv6 checks?"
+        notes: REVIEW
+- name: TODO
+  functions:
+  - name: Console logging added to Observability
+    descriptions:
+    - text: ""
+      tests:
+      - summary: TPM Secure Boot in BIOS
+        notes: REVIEW
+      - summary: Node attached storage
+        notes: REVIEW
+      - summary: "Storage: Config/default/access to local NVME drives"
+        notes: REVIEW
+      - summary: "Storage: Config/default/access to network provided storage"
+        notes: REVIEW
+      - summary: Redundant Gateways
+        notes: REVIEW

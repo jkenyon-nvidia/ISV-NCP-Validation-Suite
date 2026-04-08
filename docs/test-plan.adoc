@@ -1,0 +1,1905 @@
+= NCP Validation Test Suite
+:toc:
+:icons: font
+:max-width: none
+
+[cols="2,2,5,2,1,1,1,3,1,1,1,6",options="header"]
+|===
+| Test Domain | Function | Description | Example | Min Req | Notes | Priority | Issues | Dependency | Milestone | Release | Test Cases
+
+.22+| Foundational Services
+.10+| Image Registry
+.10+| Stores and distributes boot images, VM images, containers, and deployment artifacts. Acts as a trusted source for all deployable assets.
+.10+| GCP Artifact Registry + Images
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/37[#37] +
+icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/38[#38]
+| YTL
+| M0
+| 0.2.0
+| CRUD an custom OS image (iso file) (Upload an ISO file if supported, or remote URL if supported).
+
+| FALSE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/39[#39]
+| YTL
+| M1
+| 
+| CRUD an OS install configuration (e.g. iPXE config like Carbide)
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/40[#40]
+| YTL
+| M0
+| 0.2.0
+| CRUD a custom VM image
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/104[#104]
+| 
+| M3
+| 
+| CRUD (get, list, create, delete) custom OS images for fast boot (raw, qcow2, img, etc) for BM/VM
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/41[#41]
+| YTL
+| M1
+| 
+| Check that an OS image can be installed on a BMaaS system
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/43[#43]
+| YTL
+| M1
+| 
+| Check that an OS install configuration can be installed on a BMaaS system
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/44[#44]
+| YTL
+| M0
+| 0.2.0
+| Check that a VM image can be installed onto a VMaaS system
+
+| FALSE
+| 
+| P1
+a| 
+| 
+| M4
+| 
+| Verify that an OS image (iso file) with full NVIDIA support is readily available
+
+| FALSE
+| 
+| P1
+a| 
+| 
+| M4
+| 
+| Verify that an OS install configuration (e.g. iPXE config like Carbide) with full NVIDIA support is readily available
+
+| FALSE
+| 
+| P1
+a| 
+| 
+| M4
+| 
+| Verify that an VM image with full NVIDIA support is readily available
+
+.3+| Key Secret Mgmt
+.3+| Securely stores and manages cryptographic keys, secrets, and certificates. Supports key rotation
+.3+| AWS Secrets Manager / KMS
+| FALSE
+| 
+| P1
+a| 
+| YTL
+| M4
+| 
+| CRUD an SSH/Teleport compatible public key for system login
+
+| FALSE
+| 
+| 
+a| 
+| 
+| M5
+| 
+| Spin up an instance which uses a specified key
+
+| FALSE
+| 
+| 
+a| 
+| 
+| M5
+| 
+| Access other components via a specified key as possible (SOL, Network devices)
+
+.3+| Identity and Asset Mgmt (IAM)
+.3+| Manages users, service identities, roles, and permissions across tenants and services. Forms the security foundation of the platform.
+.3+| AWS: IAM
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/20[#20] +
+icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/21[#21]
+| YTL
+| M0
+| 0.2.0
+| Create user and log in as that user
+
+| FALSE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/23[#23]
+| YTL
+| M0
+| 0.2.0
+| Delete user
+
+| FALSE
+| 
+| P1
+a| 
+| YTL
+| M5
+| 
+| TODO for P1 validate access
+
+| DCIM
+| Monitors and manages physical assets such as racks (servers, gpus, networking) power, and cooling
+| Nautobot
+| FALSE
+| 
+| P3
+a| 
+| 
+| M5
+| 
+| TODO
+
+.3+| DDI
+.3+| core network services for name resolution, IP allocation, and address lifecycle management
+.3+| GCP Cloud DNS + IPAM
+| FALSE
+| 
+| P0
+a| 
+| MiniCloud
+| M4
+| 
+| TODO
+
+| FALSE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/131[#131]
+| MiniCloud
+| M4
+| 
+| Check that IP addresses are managed by the platform, and that DHCP is able to provide IP addresses
+
+| FALSE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/132[#132]
+| MiniCloud
+| M4
+| 
+| Check that IP addresses are managed sensibly as VPCs are configured (Move to SDN section?)
+
+| Network Underlay & Mgmt
+| Brings up the physical network fabric for Day 0, base configuration, and network OS installation. Manages switch OS versions, compliance, and safe upgrades over time. Provides base network that overlays and tenants are built upon.
+| Netris
+| FALSE
+| 
+| P0
+a| 
+| MiniCloud
+| M4
+| 
+| TODO
+
+| Resource Database
+| Resource Inventory for useable resources withing the data center
+| 
+| FALSE
+| 
+| P1
+a| 
+| YTL
+| M4
+| 
+| TODO
+
+.112+| Infrastructure and Data Services
+.9+| Control Plane accessible
+.9+| Control plane can be accessed
+.9+| 
+| FALSE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/26[#26] +
+icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/27[#27]
+| YTL
+| M0
+| 0.2.0
+| Make sure we can ping the control plane, or get a heart beat/status code
+
+| FALSE
+| 
+| P2
+a| 
+| YTL
+| M5
+| 
+| Control Plane can be upgraded (measure impact)
+
+| FALSE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/28[#28]
+| YTL
+| M0
+| 0.2.0
+| Access keys can be created, received, used to log in
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/29[#29]
+| YTL
+| M0
+| 0.2.0
+| Access keys can expire or be disabled
+
+| FALSE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/30[#30]
+| YTL
+| M0
+| 0.2.0
+| Create tenants
+
+| FALSE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/31[#31]
+| YTL
+| M0
+| 0.2.0
+| Retrieve list of tenants
+
+| FALSE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/32[#32] +
+icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/33[#33]
+| YTL
+| M0
+| 0.2.0
+| Retrieve info about individual tenant
+
+| FALSE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/34[#34]
+| YTL
+| M0
+| 0.2.0
+| Delete Tenant
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/35[#35]
+| YTL
+| M0
+| 0.2.0
+| Add user to tenant
+
+.4+| Hardware ingestion
+.4+| Makes sure that all hardware under test has been ingested
+.4+| 
+| FALSE
+| 
+| P1 (check w/ ISVs)
+a| icon:exclamation-circle[role=red] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/133[#133]
+| MiniCloud
+| M4
+| 
+| Makes sure that all hardware under test has been ingested, and matches the provided hardware
+
+| FALSE
+| 
+| P1
+a| 
+| MiniCloud
+| M4
+| 
+| Make sure that a device can be removed from the system
+
+| FALSE
+| 
+| P0
+a| 
+| MiniCloud
+| M4
+| 
+| Makes sure that all hardware under test has been ingested, and matches the provided hardware
+
+| FALSE
+| 
+| P1
+a| 
+| MiniCloud
+| M4
+| 
+| Make sure that a device can be removed from the system
+
+.5+| Attestation
+.5+| 
+.5+| 
+| FALSE
+| 
+| P1
+a| 
+| MiniCloud
+| M5
+| 
+| Check that hardware passes nonce check
+
+| FALSE
+| 
+| P1
+a| 
+| MiniCloud
+| M5
+| 
+| Check that OS is approved
+
+| FALSE
+| 
+| P1
+a| 
+| MiniCloud
+| M5
+| 
+| Check that TPM Configuration can be set per host
+
+| FALSE
+| 
+| P1
+a| 
+| MiniCloud
+| M5
+| 
+| Check that an updated BIOS is installed on all hardware
+
+| TRUE
+| 
+| P1
+a| 
+| MiniCloud
+| M4
+| 
+| Check that the updated firmware is installed
+
+.23+| Compute Services: BMaaS
+.6+| Supports the basic lifecycle of Bare Metal nodes
+.6+| AWS EC2/Forge
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/49[#49]
+| YTL
+| M1
+| 
+| Create a Bare Metal node
+
+| 
+| 
+| 
+a| 
+| 
+| 
+| 
+| Get info about a specific Bare Metal node, including if it is ready for use. min_req: true priority: P0 jira_ids: ISVP-181 dependency: YTL milestone: M1 - summary: Get a list of all Bare Metal nodes in a VPC min_req: true priority: P0 jira_ids: ISVP-182 dependency: YTL milestone: M1 github_issues: - 
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/53[#53]
+| YTL
+| M1
+| 
+| Delete a Bare Metal node
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/54[#54]
+| YTL
+| M1
+| 
+| Confirm sanitization on delete - Tenant View
+
+| TRUE
+| 
+| P0
+a| icon:exclamation-circle[role=red] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/134[#134]
+| MiniCloud
+| M4
+| 
+| Confirm sanitization on delete - Low Level
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/105[#105]
+| MiniCloud
+| M3
+| 
+| Topology-based placement (waiting on gustavo)
+
+.8+| Once created, nodes can be accessed for usage, and have the high level support controls of reboot, reinstall.
+.8+| AWS EC2/Forge
+| FALSE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/48[#48] +
+icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/56[#56]
+| YTL
+| M1
+| 
+| A running node can be accessed via SSH/Teleport for further configuration
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/50[#50] +
+icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/57[#57]
+| YTL?
+| M1
+| 
+| A running node can be rebooted in case of issue
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/135[#135]
+| MiniCloud
+| M4
+| 
+| A running node can be power-cycled in case of issue
+
+| FALSE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/58[#58] +
+icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/69[#69]
+| YTL
+| M1
+| 
+| REMOVED: A node can be reinstalled from its configured stock operating system
+
+| TRUE
+| MinAPI
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/106[#106]
+| MiniCloud
+| M3
+| 
+| A running node can be powered off (Without being destroyed)
+
+| TRUE
+| MinAPI
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/107[#107]
+| 
+| M3
+| 
+| Support for cloud-init and instance metadata discovery via link-local addresses (e.g. 169.254.169.254) or virtual devices
+
+| TRUE
+| MinAPI
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/108[#108]
+| MiniCloud
+| M3
+| 
+| A powered off node can be powered back on
+
+| TRUE
+| MinAPI
+| 
+a| 
+| YTL
+| M3 .5
+| 
+| Support for user-defined tags/labels and cloud-init metadata on instances.
+
+.2+| Nodes will be able to access expected resources on the local networks
+.2+| AWS EC2/Forge
+| FALSE
+| 
+| P0
+a| icon:exclamation-circle[role=red] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/136[#136]
+| MiniCloud
+| M4
+| 
+| Check the health and status of the DPU on instantiation
+
+| FALSE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/60[#60]
+| YTL
+| M1
+| 
+| Nodes can communicate across ethernet, infiniband, and NVLink
+
+.7+| Observability & Debug
+.7+| AWS EC2/Forge
+| FALSE
+| REVIEW
+| P1
+a| 
+| 
+| M5
+| 
+| Check for any per-host status log over time.
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/109[#109]
+| YTL??
+| M3
+| 
+| Serial console access is required (read-only sufficient, interactive preferred)
+
+| FALSE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/61[#61]
+| YTL
+| M1
+| 
+| Verify NVIDIA hardware
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/63[#63] +
+icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/68[#68]
+| YTL
+| M1
+| 
+| GPU Stress workload
+
+| TRUE
+| TODO
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/64[#64] +
+icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/82[#82]
+| YTL
+| M1
+| 
+| Nim Inference jobs
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/65[#65]
+| YTL
+| M1
+| 
+| NCCL tests
+
+| TRUE
+| TODO
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/66[#66]
+| YTL
+| M1
+| 
+| Training workload test
+
+.26+| Compute Service: VMaaS
+.5+| Supports the basic lifecycle of VM nodes
+.5+| 
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/42[#42]
+| YTL
+| M0
+| 0.2.0
+| Create a VM node
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/51[#51]
+| YTL
+| M2
+| 
+| Get info about a specific VM node, including if it is ready for use (Blocked on John)
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/45[#45]
+| YTL
+| M1
+| 
+| Get a list of all VM nodes in a VPC
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/46[#46]
+| YTL
+| M0
+| 0.2.0
+| Delete a VM node
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/47[#47]
+| YTL
+| M0
+| 0.2.0
+| Confirm sanitization on delete
+
+.7+| Once created, VM nodes can be accessed for usage, and have the high level support controls of reboot, reinstall
+.7+| 
+| FALSE
+| 
+| P0
+a| 
+| YTL
+| M0
+| 0.2.0
+| A running node can be accessed via SSH/Teleport for further configuration
+
+| FALSE
+| 
+| P0
+a| 
+| YTL
+| M0
+| 0.2.0
+| A running node can be rebooted in case of issue
+
+| FALSE
+| 
+| ~~P0~~
+a| 
+| ~~YTL~~
+| ~~M1~~
+| 
+| ~~A node can be reinstalled from its configured stock operating system~~
+
+| TRUE
+| MinAPI
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/110[#110]
+| YTL
+| M3
+| 
+| A running VM can be stopped (Without being destroyed)
+
+| TRUE
+| MinAPI
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/111[#111]
+| YTL
+| M3
+| 
+| A powered off VM can be started
+
+| TRUE
+| MinAPI
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/112[#112]
+| YTL
+| M3
+| 
+| Support for user-defined tags/labels and cloud-init metadata on instances.
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/113[#113]
+| 
+| M3
+| 
+| Support for cloud-init and instance metadata discovery via link-local addresses (e.g. 169.254.169.254) or virtual devices
+
+.2+| Quota should be enforced
+.2+| 
+| FALSE
+| 
+| P2
+a| 
+| 
+| 
+| 
+| Noisy Neighbor CPU/GPU tests
+
+| FALSE
+| 
+| P2
+a| 
+| 
+| 
+| 
+| Tenant cannot allocate more VMs than their quota allows
+
+.6+| The underlying system allows VMs to access the GPU, with high performance, and are running with the correct parameters for optimal performance
+.6+| 
+| FALSE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/55[#55]
+| YTL
+| M0
+| 0.2.0
+| Check that the host OS is a known acceptable image (like Ubuntu/DGXOS)
+
+| FALSE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/59[#59]
+| YTL
+| M0
+| 0.2.0
+| Check that the GPU is visible and accessible from the VM
+
+| FALSE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/62[#62]
+| YTL
+| M0
+| 0.2.0
+| Check that the correct Linux Kernel, libvirt, sbios, and NVIDIA drivers are installed
+
+| FALSE
+| 
+| P0
+a| 
+| YTL
+| M1
+| 
+| Check that vEGM ist configured correctly
+
+| FALSE
+| Does this include GPU Passthrough
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/67[#67]
+| YTL
+| M0
+| 0.2.0
+| Check that vCPU pinning is set correctly, PCI bus is configured correctly
+
+| FALSE
+| 
+| P1
+a| 
+| YTL
+| M5
+| 
+| TODO: More things from the "NVIDIA Grace I/O Virtualization Guide"
+
+.3+| Can run AI/ML Jobs
+.3+| 
+| FALSE
+| 
+| P0
+a| 
+| YTL
+| M0
+| 0.2.0
+| GPU Stress workload
+
+| FALSE
+| 
+| P0
+a| 
+| YTL
+| M1
+| 
+| Nim Inference jobs
+
+| FALSE
+| 
+| P0
+a| 
+| 
+| M5
+| 
+| NCCL tests
+
+.2+| nodes will be able to access expected resources on the local networks
+.2+| AWS EC2/Forge
+| FALSE
+| 
+| P0
+a| 
+| YTL
+| M5
+| 
+| Nodes can communicate across ethernet, infiniband, and NVLink
+
+| FALSE
+| 
+| 
+a| 
+| 
+| 
+| 
+| TODO
+
+| Observability & Debug
+| 
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/114[#114]
+| 
+| M3
+| 
+| Serial console access is required (read-only sufficient, interactive preferred)
+
+.33+| SDN Controller
+.33+| Controls software-defined networking overlays and fabric behavior to match the compute-on-demand requirements. Enables network segmentation, isolation, dynamic network configuration, and security groups.
+.33+| 
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/11[#11]
+| YTL
+| M0
+| 0.2.0
+| Create a VPC
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/12[#12] [small]#(TODO: verify match (85%))#
+| YTL
+| M0
+| 0.2.0
+| Retrieve a VPC
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/13[#13]
+| YTL
+| M0
+| 0.2.0
+| Update a VPC
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/14[#14]
+| YTL
+| M0
+| 0.2.0
+| Delete a VPC
+
+| FALSE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/16[#16]
+| YTL
+| M0
+| 0.2.0
+| Verify that a VPC has an exclusive subnet
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/17[#17]
+| YTL
+| M0
+| 0.2.0
+| Verify that nodes in two VPCs cannot communicate over the N/S (TAN) network
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/18[#18]
+| YTL
+| M0
+| 0.2.0
+| Verify that nodes in two VPCs cannot communicate over the E/W (CIN) network
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/115[#115]
+| 
+| M3
+| 
+| Support non-conflicting Bring-Your-Own-IP (including 7.0.0.0/8)
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/116[#116]
+| 
+| M3
+| 
+| Support Stabe Private IP allocations, where if a VM crashes and restarts the same IP address remains pinned until the node is deleted
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/117[#117]
+| 
+| M3
+| 
+| Atomically switch a floating private IP between nodes via API within <10 seconds without requiring an instance reboot.
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/118[#118]
+| 
+| M3
+| 
+| Localized DNS: Support for custom, localized DNS settings to enable internal domain resolution to private endpoints (e.g. storage endpoints)
+
+| TRUE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/119[#119]
+| 
+| M3
+| 
+| Support for VPC peering with full bandwidth and no "hairpin" routing.
+
+| TRUE
+| SDN03
+| 
+a| 
+| 
+| 
+| 
+| Create a Security Group
+
+| TRUE
+| SDN03
+| 
+a| 
+| 
+| 
+| 
+| Retrieve a Security Group/list Security Groups
+
+| TRUE
+| SDN03
+| 
+a| 
+| 
+| 
+| 
+| Update a Security Group
+
+| TRUE
+| SDN03
+| 
+a| 
+| 
+| 
+| 
+| Delete a Security Group
+
+| FALSE
+| 
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/19[#19]
+| YTL
+| M0
+| 0.2.0
+| NVLink Partitioning
+
+| FALSE
+| 
+| 
+a| 
+| YTL
+| M4
+| 
+| NVLink: Create a new partition; verify success response with partition key.
+
+| FALSE
+| 
+| 
+a| 
+| YTL
+| M4
+| 
+| NVLink: List partitions; retrieve a specific partition by partition ID
+
+| FALSE
+| 
+| 
+a| 
+| YTL
+| M4
+| 
+| NVLink: Delete an empty partition (no instances); retrieve by ID and verify not found.
+
+| FALSE
+| 
+| 
+a| 
+| YTL
+| M4
+| 
+| NVLink: Create a partition, create instance in that partition, make dure the instance becomes ready, delete instance, verify GPUs removed from partition.
+
+| FALSE
+| 
+| 
+a| 
+| YTL
+| M4
+| 
+| NVLink: Create partition, create 2 instances, verify both share the same nvlink_partition_id and both GPUs are reported for that partition
+
+| FALSE
+| 
+| 
+a| 
+| YTL
+| M4
+| 
+| IMEX: Assert nvidia-imex and nvidia-imex-ctl packages are installed and nvidia-imex.service unit is registered with systemd.
+
+| FALSE
+| 
+| 
+a| 
+| YTL
+| M4
+| 
+| IMEX: Start nvidia-imex via systemctl start nvidia-imex and assert the service reaches active/ready state.
+
+| FALSE
+| 
+| 
+a| 
+| YTL
+| M4
+| 
+| IMEX: Stop nvidia-imex via systemctl stop nvidia-imex and assert clean shutdown (other nodes show disabled node status).
+
+| FALSE
+| 
+| 
+a| 
+| YTL
+| M4
+| 
+| IMEX: Enable IMEX at boot with systemctl enable nvidia-imex, reboot, and confirm IMEX starts automatically.
+
+| FALSE
+| 
+| 
+a| 
+| YTL
+| M4
+| 
+| IMEX: After all nodes start IMEX, query domain state via nvidia-imex-ctl -N and assert state is UP, fully connected matrix
+
+| FALSE
+| 
+| 
+a| 
+| YTL
+| M4
+| 
+| IMEX: With IMEX_ENABLE_AUTH_ENCRYPTION=0, form a multi-node domain and assert connectivity without any auth/encryption.
+
+| FALSE
+| 
+| 
+a| 
+| YTL
+| M4
+| 
+| IMEX: Enable IMEX_ENABLE_AUTH_ENCRYPTION=1 with SSL_TLS mode, provide valid server/client certs, and assert mutual authentication and encrypted communication.
+
+| FALSE
+| 
+| 
+a| 
+| YTL
+| M4
+| 
+| IMEX: Enable GSSAPI/Kerberos mode (GSS_AUTH_ENCRYPT), configure KDC/keytabs, and assert mutual auth + encryption between nodes.
+
+| FALSE
+| 
+| 
+a| 
+| YTL
+| M4
+| 
+| IMEX: IMEX/K8s: Submit a workload requesting a ComputeDomain; assert ComputeDomain pods are created on each allocated node.
+
+| FALSE
+| 
+| 
+a| 
+| YTL
+| M4
+| 
+| IMEX: From workload pods in a ComputeDomain run nvbandwidth-test-job
+
+| FALSE
+| 
+| 
+a| 
+| YTL
+| M4
+| 
+| IMEX: After workload completes, assert ComputeDomain and associated IMEX resources are cleaned up.
+
+| Metadata Service
+| shared service source of truth for resource metadata such as nodes, GPUs, topology, and ownership. Enables scheduling, automation, and lifecycle management.
+| GCP Resource Manager APIs
+| FALSE
+| 
+| P1
+a| 
+| YTL
+| M4
+| 
+| TODO
+
+.4+| Cloud Control Plane
+.4+| Primary access mechanism for IaaS, provding provision and manage of compute, networking, and storage.
+.4+| AWS EC2 Control Plane
+| FALSE
+| 
+| P0
+a| 
+| ?
+| M4
+| 
+| Needs to have an API we can access from our tests to do actions
+
+| FALSE
+| 
+| 
+a| 
+| 
+| 
+| 
+| fleet management API: proivde full set of information requested below: Node ID (Unique identifier for a GPU node) Health State (Healthy/Unhealthy classification) Instance ID (Identifier for virtual workload) Creation Timestamp (Time workload/node was created) Hardware Type (Descriptor for the hardware model) GPU Count (Number of GPUs per node) Top-levelAccount/ID (Identifier for the top-level organization/account) Sub-LevelProject/ID (Identifier for the nested project/sub-account) In Use (True/False status indicating if the GPU Node is turned on and in use) Region (Region of the data center where nodes are deployed)
+
+| FALSE
+| 
+| 
+a| 
+| 
+| 
+| 
+| Resource discovery API: newly delivered capacity must be discoverable. This "Resource Index" must provide a resource stable identifer and some information on why it’s being provided. This may be polled regularly
+
+| FALSE
+| 
+| 
+a| 
+| 
+| 
+| 
+| TODO
+
+.4+| Load Balancing
+.4+| Distributes traffic across services (e.g. inference endpoints) for availability and scale.
+.4+| AWS Network Load Balancer
+| FALSE
+| 
+| P2
+a| 
+| YTL
+| 
+| 
+| CRUD a load balancer
+
+| FALSE
+| 
+| 
+a| 
+| YTL
+| 
+| 
+| Verify that traffic is distributed across multiple nodes
+
+| FALSE
+| 
+| 
+a| 
+| 
+| 
+| 
+| Verify that nodes can be marked as down or up (for rolling deployments/etc)
+
+| FALSE
+| 
+| 
+a| 
+| YTL
+| 
+| 
+| Verify that no traffic is dropped during outages
+
+.3+| Break-Fix
+.3+| A break-fix service works with a variety of components to detect, triage, remediate, and validate nodes in an AI factory. The critical focus here is on the GPU nodes, but the system can scale beyond.
+.3+| Lazarus, Shoreline
+| FALSE
+| 
+| P1
+a| 
+| YTL
+| 
+| 
+| Check that GPUd or Sentinel is running
+
+| FALSE
+| 
+| 
+a| 
+| YTL
+| 
+| 
+| Verify that Tenants can be notified, by some communication system, of planned future node maintenance
+
+| FALSE
+| 
+| 
+a| 
+| YTL
+| 
+| 
+| Verify that Tenants can be notified, by some communication system, of immediate node failure
+
+.7+| Data Services
+| SDS Controller
+| Manages software-defined storage services and policies. Orchestrates provisioning, tiers, and resiliency.
+| AWS: EBS + FSx backend control planes
+| FALSE
+| 
+| P2
+a| 
+| YTL
+| 
+| 
+| TODO
+
+| Parallel File System Services
+| high performance file system optimized for AI and HPC workloads
+| 
+| FALSE
+| 
+| P2
+a| 
+| YTL
+| 
+| 
+| TODO
+
+| Object Storage Service
+| durable, scalable object storage for things like datasets, model artifacts, logs, backups.
+| S3
+| FALSE
+| 
+| P2
+a| 
+| YTL
+| 
+| 
+| TODO
+
+| Block Storage Services
+| persistent block volumes for a wide range of uses
+| AWS EBS, GCP Persistent Disk
+| FALSE
+| 
+| P2
+a| 
+| YTL
+| 
+| 
+| TODO
+
+| Cache Services
+| in-memory data store for frequently used data
+| ElastiCache
+| FALSE
+| 
+| P2
+a| 
+| YTL
+| 
+| 
+| TODO
+
+| Vector Store
+| stores and indexes embeddings for semantic search and RAG generation
+| Vertex AI Vector Search
+| FALSE
+| 
+| P2
+a| 
+| YTL
+| 
+| 
+| TODO
+
+| Relational Database
+| structured database (SQL) service
+| GCP Cloud SQL
+| FALSE
+| 
+| P2
+a| 
+| YTL
+| 
+| 
+| TODO
+
+.33+| Workload Orchestration
+| Backup and Recovery
+| Centralized managed service to automate and govern data backup across services
+| AWS backup
+| FALSE
+| 
+| P2
+a| 
+| 
+| M4
+| 
+| TODO
+
+| Model Registry
+| storage with versioning for models and AI artifacts
+| AWS Sagemaker Model Registry
+| FALSE
+| 
+| P2
+a| 
+| 
+| 
+| 
+| TODO
+
+.10+| Slurm Control Plane
+.10+| control plane to schedule and manage large-scale GPU batch training with SLURM semantics.
+.10+| AWS ParallelCluster
+| FALSE
+| Mostly done?
+| P0
+a| 
+| YTL
+| M0
+| 
+| Create a SLURM instance using the software platform
+
+| FALSE
+| ✅ Done
+| P0
+a| 
+| YTL
+| M0
+| 0.2.0
+| SlurmInfoAvailable
+
+| FALSE
+| ✅ Done
+| P0
+a| 
+| YTL
+| M0
+| 0.2.0
+| SlurmPartition cpu and gpu
+
+| FALSE
+| ✅ Done
+| P0
+a| 
+| YTL
+| M0
+| 0.2.0
+| SlurmJobSubmission
+
+| FALSE
+| ✅ Done
+| P0
+a| 
+| YTL
+| M0
+| 0.2.0
+| SlurmGpuAllocation 1gpu and 2gpu
+
+| FALSE
+| ✅ Done
+| P0
+a| 
+| YTL
+| M0
+| 0.2.0
+| SlurmNodeJobExecution cpu and gpu
+
+| FALSE
+| ✅ Done
+| P0
+a| 
+| YTL
+| M0
+| 0.2.0
+| SlurmGpuStressWorkload
+
+| FALSE
+| ✅ Done
+| P0
+a| 
+| YTL
+| M0
+| 0.2.0
+| SlurmNcclMultiNodeWorkload
+
+| FALSE
+| ✅ Done
+| P0
+a| 
+| YTL
+| M0
+| 0.2.0
+| SlurmSbatchWorkload gpu and cpu
+
+| FALSE
+| ✅ Done
+| P0
+a| 
+| YTL
+| M0
+| 0.2.0
+| SlurmSbatchWorkload-inline
+
+.20+| Managed Kubernetes Control Plane
+| Tenant-isolated Kubernetes control planes for managing k8s workloads. does placement, networking, lifecyle mgmt.
+| AWS EKS, GCP GKE
+| TRUE
+| Mostly done?
+| P0
+a| 
+| YTL
+| M0
+| 
+| Create a K8s Instance using the software platform (CLI, Terraform)
+
+.3+| Full lifecycle management
+.3+| 
+| TRUE
+| 
+| 
+a| 
+| 
+| M4
+| 
+| Run through all the steps of the k8s lifecycle management, including user-initated CP update
+
+| TRUE
+| 
+| 
+a| 
+| 
+| 
+| 
+| Add: The control plane should automatically add more capacity when load increases
+
+| TRUE
+| 
+| 
+a| 
+| 
+| 
+| 
+| Add: Pin Control Plane instances to a specific count to handle a particular load-limit
+
+.4+| Control Plane Isolation
+.4+| 
+| TRUE
+| 
+| 
+a| 
+| 
+| M4
+| 
+| per tenant k8s control plane outside of the tenant cluster/VPC
+
+| TRUE
+| ✅ Done
+| P0
+a| 
+| YTL
+| M0
+| 0.2.0
+| Be able to run k8s workloads
+
+| FALSE
+| ✅ Done
+| P0
+a| 
+| YTL
+| M0
+| 0.2.0
+| K8s Nim Inference
+
+| FALSE
+| ✅ Done
+| P0
+a| 
+| YTL
+| M0
+| 0.2.0
+| K8s Nim Helm
+
+| Topology based placement
+| 
+| TRUE
+| 
+| P0
+a| 
+| 
+| 
+| 
+| K8s Nccl - (Brad: did you use DRA?)
+
+| k8s upstream proxy
+| 
+| TRUE
+| k8s05
+| 
+a| 
+| 
+| 
+| 
+| validate adherence to upstream proxy requirements (service to pod load balancing, acces to internal services)
+
+| Dynamic Resource Allocaiton
+| 
+| TRUE
+| k8s06/22
+| 
+a| 
+| 
+| 
+| 
+| verify that the k8s cluster supports the DRA API (resources.k8s.io) to get GPUs on the same nvlink
+
+| Run k8s conformance tests
+| 
+| TRUE
+| k8s01
+| 
+a| 
+| 
+| 
+| 
+| get versions, topology, core APIs by: (a) pass CNCF k8s conformance: https://github.com/cncf/k8s-conformance (b) add AI conformance: [https://github.com/cncf/k8s-ai-conformance](https://github.com/cncf/k8s-ai-conformance)
+
+| k8s service account OIDC
+| 
+| TRUE
+| 
+| 
+a| 
+| 
+| 
+| 
+| test that the service account can be authorized with OIDC
+
+| Test support for CRDs and Validating/Mutating Admission Controllers (webhooks)
+| 
+| TRUE
+| k8s19
+| 
+a| 
+| 
+| 
+| 
+| create a CRD, create webhook, and test validation/mutation requirement
+
+| TODO: L3 networking logging
+| 
+| TRUE
+| K8s16
+| 
+a| 
+| 
+| 
+| 
+| Verify that pod-to-pod L3 traffic flow logs are available and queryable
+
+| CNI Compliance
+| 
+| TRUE
+| K8s20
+| 
+a| 
+| 
+| 
+| 
+| Apply a NetworkPolicy; verify pod connectivity is restricted as expected; verify IPv4 and IPv6 addresses are assigned on dual-stack nodes
+
+.2+| TODO: Dynamic provisioning, snapshots, and resizing
+.2+| 
+| TRUE
+| K8s21
+| 
+a| 
+| 
+| 
+| 
+| TODO: Helm version
+
+| TRUE
+| K8s21
+| 
+a| 
+| 
+| 
+| 
+| TODO: Kustomize version
+
+.2+| NVIDIA Operator support
+.2+| 
+| TRUE
+| K8S23
+| 
+a| 
+| 
+| 
+| 
+| TODO: Compatibility with the mainline NVIDIA GPU Operator
+
+| TRUE
+| K8S23
+| 
+a| 
+| 
+| 
+| 
+| TODO: Can install custom GPU operator and drivers
+
+| Power Policy Management
+| Control plane to maange power allocation (re-allocation) based on need and availability
+| Boost and Flex (DPS)
+| FALSE
+| 
+| P2
+a| 
+| ?
+| 
+| 
+| TODO
+
+.3+| AI Platform & User Access
+| Host API Gateway
+| Service control plane "front door" that enforces authn/authz via IAM
+| AWS/GCP API Gateway
+| FALSE
+| 
+| P2
+a| 
+| 
+| 
+| 
+| TODO
+
+| Al Platform 1..N Control Planes
+| Placeholder for all AI platform CPs you might run. E.g. Run:ai, NVCF, Redhat Inference Server
+| 
+| FALSE
+| 
+| P2
+a| 
+| 
+| 
+| 
+| TODO
+
+| Web Management Dashboard
+| 
+| 
+| FALSE
+| 
+| P2
+a| 
+| YTL
+| M5
+| 
+| TODO
+
+.7+| Observability
+.4+| Observability Collectors
+.4+| 
+.4+| 
+| FALSE
+| ✅ Done
+| P0
+a| 
+| YTL
+| M0
+| 0.2.0
+| Validate that an OTel endpoint is provided and some data can be pulled from it
+
+| FALSE
+| ✅ Done
+| P0
+a| 
+| YTL
+| M0
+| 0.2.0
+| Logging information about the control plane is available
+
+| FALSE
+| ✅ Done
+| P0
+a| 
+| YTL
+| M0
+| 0.2.0
+| Logging information from instances
+
+| FALSE
+| ✅ Done
+| P0
+a| 
+| YTL
+| M0
+| 0.2.0
+| Alerts can be issued by the system in case of problems
+
+.3+| Telemetry / Data Lakes
+.3+| 
+.3+| 
+| FALSE
+| 
+| P1
+a| 
+| YTL
+| 
+| 
+| TODO
+
+| TRUE
+| MinAPI
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/120[#120]
+| MiniCloud
+| M3
+| 
+| Read only access to a BMaaS system's serial console
+
+| TRUE
+| MinAPI
+| P0
+a| icon:check-circle[role=green] https://github.com/NVIDIA/ISV-NCP-Validation-Suite/issues/121[#121]
+| YTL
+| M3
+| 
+| Read only access to a VM serial console
+
+.3+| Benchmarking
+.3+| Exemplar
+.3+| Run a mini-cloud configuration of Exemplar benchmarks
+.3+| 
+| TRUE
+| 
+| 
+a| 
+| 
+| 
+| 
+| Simulate Examplar across: 8, 16, 32 GPUs (might be 18, 36 - need to check availalbe targets)
+
+| 
+| REVIEW
+| 
+a| 
+| 
+| 
+| 
+| NVMesh checks?
+
+| 
+| REVIEW
+| 
+a| 
+| 
+| 
+| 
+| IPv4 and IPv6 checks?
+
+.5+| TODO
+.5+| Console logging added to Observability
+.5+| 
+.5+| 
+| 
+| REVIEW
+| 
+a| 
+| 
+| 
+| 
+| TPM Secure Boot in BIOS
+
+| 
+| REVIEW
+| 
+a| 
+| 
+| 
+| 
+| Node attached storage
+
+| 
+| REVIEW
+| 
+a| 
+| 
+| 
+| 
+| Storage: Config/default/access to local NVME drives
+
+| 
+| REVIEW
+| 
+a| 
+| 
+| 
+| 
+| Storage: Config/default/access to network provided storage
+
+| 
+| REVIEW
+| 
+a| 
+| 
+| 
+| 
+| Redundant Gateways
+
+|===
