@@ -13,12 +13,52 @@
 
 Provides wait_for_ssh() used by bare-metal and VM stubs that need to
 poll for SSH readiness after instance state changes (start, reboot,
-power-cycle, reinstall).
+power-cycle, reinstall), and ssh_run() for one-shot commands.
 """
 
 import subprocess
 import sys
 import time
+
+
+def ssh_run(
+    host: str,
+    user: str,
+    key_file: str,
+    command: str,
+    *,
+    timeout: int = 30,
+    connect_timeout: int = 10,
+) -> tuple[int, str, str]:
+    """Run a single command over SSH. Returns (exit_code, stdout, stderr)."""
+    try:
+        proc = subprocess.run(
+            [
+                "ssh",
+                "-o",
+                "StrictHostKeyChecking=no",
+                "-o",
+                "UserKnownHostsFile=/dev/null",
+                "-o",
+                f"ConnectTimeout={connect_timeout}",
+                "-o",
+                "BatchMode=yes",
+                "-i",
+                key_file,
+                f"{user}@{host}",
+                "--",
+                command,
+            ],
+            capture_output=True,
+            timeout=timeout,
+            text=True,
+            check=False,
+        )
+    except subprocess.TimeoutExpired as err:
+        return 124, "", f"TimeoutExpired: {err}"
+    except OSError as err:
+        return 255, "", f"OSError: {err}"
+    return proc.returncode, proc.stdout, proc.stderr
 
 
 def wait_for_ssh(
