@@ -107,6 +107,8 @@ For the domain / script-count / AWS-reference overview see the
 | `teardown_nim` | teardown | `providers/shared/teardown_nim.py` | Shared NIM cleanup |
 | `teardown` | teardown | `providers/my-isv/scripts/bare_metal/teardown.py` | `resources_deleted`, `message` |
 | `verify_teardown` | teardown | `providers/my-isv/scripts/bare_metal/verify_terminated.py` | `checks.instance_terminated`, `checks.sg_deleted` |
+| `verify_ingestion` | test | `providers/nico/scripts/hardware_ingestion/verify_ingestion.py` | `expected_count`, `ingested_count`, `matched_count`, `missing`, `extra`, `machines[].status`, `machines[].health` |
+| `check_dpu_health` | test | `providers/nico/scripts/dpu/check_dpu_health.py` | `machines_checked`, `machines[].dpu_count`, `machines[].dpu_agent_heartbeat`, `machines[].health_summary`, `machines[].health_alerts` |
 
 ### Kubernetes (`k8s.yaml`)
 

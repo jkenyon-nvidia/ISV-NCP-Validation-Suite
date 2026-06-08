@@ -19,13 +19,21 @@ Values are never read into CheckResult.message/detail — only set/unset state
 is reported, so this category is safe to print and to emit as JSON.
 """
 
+import base64
+import json
 import os
 from collections.abc import Callable
 from dataclasses import dataclass
 from enum import StrEnum
 from pathlib import Path
+from urllib.error import HTTPError, URLError
+from urllib.parse import urlencode
+from urllib.request import Request, urlopen
 
 from isvctl.doctor.result import CategoryReport, CheckResult, Status
+from isvctl.redaction import redact_text
+
+_NICO_TOKEN_TIMEOUT_SECONDS = 30
 
 
 class Requirement(StrEnum):
@@ -133,6 +141,56 @@ _VARS: tuple[_Var, ...] = (
         Requirement.OPTIONAL,
         "skip AWS teardown phase",
     ),
+    # NICo — optional by default; --provider nico runs strict provider-specific
+    # checks for the same variables.
+    _Var(
+        "NICO_API_BASE",
+        "NICo",
+        Requirement.OPTIONAL,
+        "NICo API base URL",
+    ),
+    _Var(
+        "NICO_ORGANIZATION",
+        "NICo",
+        Requirement.OPTIONAL,
+        "NICo organization name used in the API path",
+    ),
+    _Var(
+        "NICO_SITE_ID",
+        "NICo",
+        Requirement.OPTIONAL,
+        "Forge site UUID for NICo hardware checks",
+    ),
+    _Var(
+        "NICO_BEARER_TOKEN",
+        "NICo",
+        Requirement.OPTIONAL,
+        "local NICo bearer token for API authentication",
+    ),
+    _Var(
+        "NICO_SSA_ISSUER",
+        "NICo",
+        Requirement.OPTIONAL,
+        "SSA issuer URL for NICo client_credentials auth",
+    ),
+    _Var(
+        "NICO_CLIENT_ID",
+        "NICo",
+        Requirement.OPTIONAL,
+        "OIDC client ID for NICo client_credentials auth",
+    ),
+    _Var(
+        "NICO_CLIENT_SECRET",
+        "NICo",
+        Requirement.OPTIONAL,
+        "OIDC client secret for NICo client_credentials auth",
+    ),
+    _Var(
+        "NICO_OIDC_SCOPE",
+        "NICo",
+        Requirement.OPTIONAL,
+        "optional OIDC scope for NICo client_credentials auth",
+    ),
 )
 
 
@@ -204,10 +262,219 @@ def _check_aws_provider() -> list[CheckResult]:
     ]
 
 
+def _env_value(name: str) -> str:
+    """Return a stripped environment value or an empty string."""
+    return os.environ.get(name, "").strip()
+
+
+def _request_nico_oidc_token(
+    *,
+    issuer_url: str,
+    client_id: str,
+    client_secret: str,
+    scope: str,
+) -> str:
+    """Request a NICo access token with OIDC client_credentials."""
+    token_endpoint = _discover_nico_oidc_token_endpoint(issuer_url)
+    form = {"grant_type": "client_credentials"}
+    if scope:
+        form["scope"] = scope
+    credentials = base64.b64encode(f"{client_id}:{client_secret}".encode()).decode()
+    request = Request(
+        token_endpoint,
+        data=urlencode(form).encode(),
+        headers={
+            "Authorization": f"Basic {credentials}",
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        method="POST",
+    )
+    try:
+        with urlopen(request, timeout=_NICO_TOKEN_TIMEOUT_SECONDS) as response:
+            payload = json.loads(response.read().decode())
+    except HTTPError as exc:
+        detail = f"HTTP {exc.code}"
+        if exc.fp:
+            body = redact_text(exc.fp.read().decode(errors="replace")[:300])
+            if body:
+                detail = f"{detail}: {body}"
+        raise RuntimeError(f"OIDC token request failed with {detail}") from exc
+    except URLError as exc:
+        raise RuntimeError(f"OIDC token request failed: {exc.reason}") from exc
+    except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+        raise RuntimeError("OIDC token response was not valid JSON") from exc
+
+    token = payload.get("access_token")
+    if not isinstance(token, str) or not token.strip():
+        raise RuntimeError("OIDC token response did not contain access_token") from None
+    return token.strip()
+
+
+def _discover_nico_oidc_token_endpoint(issuer_url: str) -> str:
+    """Resolve the OIDC token endpoint from issuer metadata."""
+    request = Request(f"{issuer_url.rstrip('/')}/.well-known/openid-configuration")
+    try:
+        with urlopen(request, timeout=_NICO_TOKEN_TIMEOUT_SECONDS) as response:
+            payload = json.loads(response.read().decode())
+    except HTTPError as exc:
+        detail = f"HTTP {exc.code}"
+        if exc.fp:
+            body = redact_text(exc.fp.read().decode(errors="replace")[:300])
+            if body:
+                detail = f"{detail}: {body}"
+        raise RuntimeError(f"OIDC discovery failed with {detail}") from exc
+    except URLError as exc:
+        raise RuntimeError(f"OIDC discovery failed: {exc.reason}") from exc
+    except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+        raise RuntimeError("OIDC discovery response was not valid JSON") from exc
+
+    token_endpoint = payload.get("token_endpoint")
+    if not isinstance(token_endpoint, str) or not token_endpoint.strip():
+        raise RuntimeError("OIDC discovery response did not contain token_endpoint") from None
+    return token_endpoint.strip()
+
+
+def _resolve_nico_doctor_token() -> tuple[str, str]:
+    """Resolve NICo auth for doctor and return token plus safe display label."""
+    bearer = _env_value("NICO_BEARER_TOKEN")
+    if bearer:
+        return bearer, "bearer token configured"
+
+    issuer_url = _env_value("NICO_SSA_ISSUER")
+    client_id = _env_value("NICO_CLIENT_ID")
+    client_secret = _env_value("NICO_CLIENT_SECRET")
+    missing = [
+        name
+        for name, value in (
+            ("NICO_SSA_ISSUER", issuer_url),
+            ("NICO_CLIENT_ID", client_id),
+            ("NICO_CLIENT_SECRET", client_secret),
+        )
+        if not value
+    ]
+    if missing:
+        raise RuntimeError(
+            f"set NICO_BEARER_TOKEN or configure OIDC client_credentials (missing: {', '.join(missing)})"
+        )
+
+    token = _request_nico_oidc_token(
+        issuer_url=issuer_url,
+        client_id=client_id,
+        client_secret=client_secret,
+        scope=_env_value("NICO_OIDC_SCOPE"),
+    )
+    return token, "OIDC client_credentials configured"
+
+
+def _probe_nico_api(organization: str, site_id: str, api_base: str, token: str) -> bool:
+    """Probe the NICo site endpoint with the resolved token."""
+    url = f"{api_base.rstrip('/')}/{organization}/carbide/site/{site_id}"
+    request = Request(url, headers={"Authorization": f"Bearer {token}"})
+    with urlopen(request, timeout=10) as response:
+        response.read()
+    return True
+
+
+def _check_nico_provider() -> list[CheckResult]:
+    """NICo readiness checks for `isvctl doctor --provider nico`."""
+    api_base = _env_value("NICO_API_BASE")
+    organization = _env_value("NICO_ORGANIZATION")
+    site_id = _env_value("NICO_SITE_ID")
+    results = [
+        CheckResult(
+            name="NICO_API_BASE",
+            status=Status.OK if api_base else Status.FAIL,
+            message="set" if api_base else "unset (required)",
+            remediation=None if api_base else "export NICO_API_BASE with the NICo API base URL",
+            group="NICo",
+        ),
+        CheckResult(
+            name="NICO_ORGANIZATION",
+            status=Status.OK if organization else Status.FAIL,
+            message="set" if organization else "unset (required)",
+            remediation=None
+            if organization
+            else "export NICO_ORGANIZATION with the NICo organization name used in the API path",
+            group="NICo",
+        ),
+        CheckResult(
+            name="NICO_SITE_ID",
+            status=Status.OK if site_id else Status.FAIL,
+            message="set" if site_id else "unset (required)",
+            remediation=None if site_id else "export NICO_SITE_ID with the Forge site UUID",
+            group="NICo",
+        ),
+    ]
+
+    token = ""
+    try:
+        token, auth_message = _resolve_nico_doctor_token()
+    except RuntimeError as exc:
+        is_missing_config = str(exc).startswith("set NICO_BEARER_TOKEN")
+        results.append(
+            CheckResult(
+                name="NICo auth",
+                status=Status.FAIL,
+                message="not configured" if is_missing_config else "auth failed",
+                remediation=str(exc),
+                group="NICo",
+            )
+        )
+    else:
+        results.append(
+            CheckResult(
+                name="NICo auth",
+                status=Status.OK,
+                message=auth_message,
+                group="NICo",
+            )
+        )
+
+    if not api_base or not organization or not site_id or not token:
+        results.append(
+            CheckResult(
+                name="NICo API",
+                status=Status.SKIP,
+                message="skipped until NICo config and auth are complete",
+                group="NICo",
+            )
+        )
+        return results
+
+    try:
+        reachable = _probe_nico_api(organization, site_id, api_base, token)
+    except (HTTPError, URLError, OSError, RuntimeError) as exc:
+        results.append(
+            CheckResult(
+                name="NICo API",
+                status=Status.FAIL,
+                message="unreachable or unauthorized",
+                detail=str(exc),
+                remediation="check NICO_API_BASE, NICO_ORGANIZATION, NICO_SITE_ID, credentials, and any port-forward",
+                group="NICo",
+            )
+        )
+    else:
+        results.append(
+            CheckResult(
+                name="NICo API",
+                status=Status.OK if reachable else Status.FAIL,
+                message="reachable" if reachable else "unreachable",
+                group="NICo",
+            )
+        )
+
+    return results
+
+
 # Provider-conditional readiness checks. A selected provider gets a real
 # capability check (credential chain, etc.) appended to the env category.
 _PROVIDER_CHECKS: dict[str, Callable[[], list[CheckResult]]] = {
     "aws": _check_aws_provider,
+    "nico": _check_nico_provider,
+}
+_PROVIDER_STRICT_ENV_VARS: dict[str, frozenset[str]] = {
+    "nico": frozenset({"NICO_API_BASE", "NICO_ORGANIZATION", "NICO_SITE_ID"}),
 }
 
 
@@ -222,7 +489,12 @@ def check_env(providers: list[str] | None = None) -> CategoryReport:
         CategoryReport. Values are never recorded — only set/unset state.
     """
     results: list[CheckResult] = []
+    provider_strict_vars = {
+        name for prov in providers or [] for name in _PROVIDER_STRICT_ENV_VARS.get(prov, frozenset())
+    }
     for var in _VARS:
+        if var.name in provider_strict_vars:
+            continue
         # "set" means exported, even if empty — distinguishing set-but-empty
         # from truly unset (a bare `bool()` would mis-report `FOO=` as unset).
         present = os.environ.get(var.name) is not None
