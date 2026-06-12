@@ -31,6 +31,13 @@ intervening ``sanitizing`` stage, and that no available host is still bound to
 a prior tenant. GPU presence and firmware identity (vendor / product / BIOS)
 are surfaced so the GPU-memory and firmware-reset checks can scope and report.
 
+The same ``sanitizing`` (Reset) stage performs the NVMe/HDD secure erase, and
+NICo only returns a host to ``Ready`` once that whole stage succeeds (a failed
+storage clean -> ``NVMECleanFailed`` -> the host stays out of the pool), so the
+disk check (SEC21-02) gates on the same lifecycle signal. The per-disk Scout
+cleanup results are not exposed on the REST machine, so no separate disk field
+is emitted.
+
 NICo MachineStatus enum (per the upstream OpenAPI spec):
   Initializing | Ready | Reset | Maintenance | InUse | Error | Decommissioned | Unknown
 

@@ -34,6 +34,7 @@ from isvtest.validations.governance import GovernanceMetricsCheck
 from isvtest.validations.health import HealthAggregationCheck, HostHealthCheck
 from isvtest.validations.infiniband import IbKeysConfiguredCheck, IbTenantIsolationCheck
 from isvtest.validations.sanitization import (
+    DiskSanitizationCheck,
     GpuMemorySanitizationCheck,
     MemorySanitizationCheck,
 )
@@ -1336,7 +1337,7 @@ def test_ib_keys_script_surfaces_api_errors(
 
 
 # ---------------------------------------------------------------------------
-# query_sanitization (SEC21-04/05/06) script
+# query_sanitization (SEC21-02/04/05/06) script
 # ---------------------------------------------------------------------------
 
 
@@ -1512,3 +1513,27 @@ def test_sanitization_script_output_satisfies_gpu_check(
     check = GpuMemorySanitizationCheck(config={"step_output": payload})
     check.run()
     assert check._passed is True, check._error
+
+
+def test_sanitization_script_output_satisfies_disk_check(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """End-to-end: a host that completed the sanitizing stage passes; a skip fails.
+
+    SEC21-02 gates on the same Reset->Ready lifecycle as the memory check,
+    because that stage performs the NVMe/HDD secure erase and a host only
+    returns to the pool once it succeeds.
+    """
+    clean = _run_sanitization(monkeypatch, capsys, [_sanitization_machine()])
+    check = DiskSanitizationCheck(config={"step_output": clean})
+    check.run()
+    assert check._passed is True, check._error
+
+    dirty = _run_sanitization(monkeypatch, capsys, [_sanitization_machine(history_statuses=["InUse", "Ready"])])
+    bad = DiskSanitizationCheck(config={"step_output": dirty})
+    bad.run()
+    assert bad._passed is False
+    assert "1/1 machine(s)" in bad._error
+    sub = next(r for r in bad._subtest_results if r["name"] == "disk_m-1")
+    assert "without sanitization" in sub["message"]

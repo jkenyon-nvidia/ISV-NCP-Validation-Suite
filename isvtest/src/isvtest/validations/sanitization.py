@@ -15,7 +15,7 @@
 
 """Tenant-transition data-sanitization validations (requirement SEC21/SEC22).
 
-Three provider-agnostic checks that assert a cloud does not hand a host to a
+Four provider-agnostic checks that assert a cloud does not hand a host to a
 new tenant until it has been sanitized since the previous tenancy:
 
 - ``MemorySanitizationCheck`` (SEC21-04): host (RAM) memory is sanitized
@@ -24,8 +24,10 @@ new tenant until it has been sanitized since the previous tenancy:
   between tenants (scoped to GPU-equipped hosts).
 - ``FirmwareResetCheck`` (SEC21-06 / SEC22): TPM is cleared and BIOS/UEFI is
   recommitted during tenant transitions or hardware replacement.
+- ``DiskSanitizationCheck`` (SEC21-02): storage/disk is sanitized on delete, so
+  a prior tenant's on-disk data cannot leak to the next tenant.
 
-All three share one provider-neutral signal: a host that has served a tenant
+All four share one provider-neutral signal: a host that has served a tenant
 must pass through a dedicated *sanitizing* lifecycle stage before it becomes
 allocatable to a new tenant again. The check inspects the host's recorded
 state ``transitions`` and fails a host that went from ``in_use`` back to
@@ -33,6 +35,17 @@ state ``transitions`` and fails a host that went from ``in_use`` back to
 to new tenants while still bound to a prior tenant. They only inspect the
 provider-neutral JSON a step script emits, so any provider that maps its
 host lifecycle into the documented fields can reuse them.
+
+The disk and memory checks gate on the same lifecycle signal: on platforms
+like NICo a single between-tenant sanitizing stage performs RAM cleanup,
+NVMe/HDD secure erase, the UEFI memory-overwrite check, InfiniBand cleanup,
+and TPM/BIOS reset together, and a host is only returned to the allocatable
+pool once that whole stage (including storage secure-erase) succeeds -- a
+failed storage clean keeps the host out of the pool. So at the host-lifecycle
+granularity these checks observe, storage sanitization on delete is confirmed
+by the same gate; they remain separate test IDs per the requirements they map
+to. A full low-level disk-remnant probe (write a marker, release, reallocate,
+re-read the raw device) is out of scope for this lifecycle audit.
 """
 
 from __future__ import annotations
@@ -242,3 +255,32 @@ class FirmwareResetCheck(_TenantSanitizationCheck):
                 passed=True,
                 message=f"{label}: {vendor} {product}, BIOS {bios_version}",
             )
+
+
+class DiskSanitizationCheck(_TenantSanitizationCheck):
+    """Validate storage is sanitized on delete between tenants (SEC21-02).
+
+    Uses the same tenant-transition gate as ``MemorySanitizationCheck`` but is
+    storage-framed. On platforms like NICo the between-tenant sanitizing stage
+    (the machine ``Reset`` status) performs the NVMe/HDD secure erase, and a
+    host is only returned to the allocatable pool (``Ready`` + usable) once that
+    stage -- including the storage secure-erase -- has completed; a failed disk
+    clean drives the host to a failure state (e.g. ``NVMECleanFailed``) and
+    keeps it out of the pool. So asserting the host passed through the
+    sanitizing stage before becoming allocatable is the host-lifecycle
+    confirmation that its storage was sanitized on delete.
+
+    The per-disk secure-erase result (Scout's ``nvme``/``hdd`` cleanup steps)
+    is not exposed in the host-lifecycle JSON this check consumes, and a full
+    low-level disk-remnant probe (write a marker, release, reallocate, re-read
+    the raw device) is out of scope for this audit.
+
+    Config:
+        step_output: Step output containing per-machine sanitization records
+            (see ``MemorySanitizationCheck``).
+    """
+
+    description: ClassVar[str] = "Check storage is sanitized on delete between tenants"
+    labels: ClassVar[tuple[str, ...]] = ("bare_metal", "security", "sanitization", "disk")
+    subject: ClassVar[str] = "Storage sanitization"
+    subtest_prefix: ClassVar[str] = "disk"

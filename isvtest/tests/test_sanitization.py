@@ -13,13 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Tests for the tenant-transition sanitization validations (SEC21-04/05/06)."""
+"""Tests for the tenant-transition sanitization validations (SEC21-02/04/05/06)."""
 
 from __future__ import annotations
 
 from typing import Any
 
 from isvtest.validations.sanitization import (
+    DiskSanitizationCheck,
     FirmwareResetCheck,
     GpuMemorySanitizationCheck,
     MemorySanitizationCheck,
@@ -237,3 +238,54 @@ class TestFirmwareResetCheck:
         check.run()
         assert check._passed is False
         assert not any(r["name"].endswith("_identity") for r in check._subtest_results)
+
+
+# ===========================================================================
+# DiskSanitizationCheck (SEC21-02)
+# ===========================================================================
+
+
+class TestDiskSanitizationCheck:
+    """Tests for DiskSanitizationCheck validation (SEC21-02)."""
+
+    def test_sanitized_fleet_passes(self) -> None:
+        """A fleet whose released hosts all passed the sanitizing stage passes."""
+        check = DiskSanitizationCheck(config={"step_output": _output()})
+        check.run()
+        assert check._passed is True, check._error
+        sub = next(r for r in check._subtest_results if r["name"] == "disk_m-001")
+        assert sub["passed"] is True
+
+    def test_never_served_tenant_passes(self) -> None:
+        """A host with no prior tenancy needs no storage wipe and passes vacuously."""
+        machine = _machine(served_tenant=False, transitions=["initializing", "available"])
+        check = DiskSanitizationCheck(config={"step_output": _output(machines=[machine])})
+        check.run()
+        assert check._passed is True, check._error
+        assert "no prior tenancy" in check._subtest_results[0]["message"]
+
+    def test_unsanitized_release_fails(self) -> None:
+        """A host returned to the pool without the sanitizing stage fails."""
+        machine = _machine(sanitized=False, transitions=["in_use", "available"])
+        check = DiskSanitizationCheck(config={"step_output": _output(machines=[machine])})
+        check.run()
+        assert check._passed is False
+        assert "1/1 machine(s)" in check._error
+        sub = next(r for r in check._subtest_results if r["name"] == "disk_m-001")
+        assert "without sanitization" in sub["message"]
+
+    def test_stale_tenant_binding_fails(self) -> None:
+        """A host still bound to a prior tenant fails the storage gate too."""
+        machine = _machine(stale_tenant_binding=True)
+        check = DiskSanitizationCheck(config={"step_output": _output(machines=[machine])})
+        check.run()
+        assert check._passed is False
+        sub = next(r for r in check._subtest_results if r["name"] == "disk_m-001")
+        assert "still bound to a prior tenant" in sub["message"]
+
+    def test_step_failure(self) -> None:
+        """A failed step is reported with its error detail."""
+        check = DiskSanitizationCheck(config={"step_output": _output(success=False, error="API timeout")})
+        check.run()
+        assert check._passed is False
+        assert "API timeout" in check._error
