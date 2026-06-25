@@ -127,11 +127,11 @@ tests:
           labels: ["network"]
           step: traffic_validation
         VpcIpConfigCheck:
-          test_id: "CP-XX-02"
+          test_id: "IPAM02-01"
           labels: ["network"]
           step: vpc_ip_config
         DhcpIpManagementCheck:
-          test_id: "CP-XX-01"
+          test_id: "IPAM01-01"
           labels: ["network", "ssh"]
           step: dhcp_ip_test
 
@@ -188,7 +188,7 @@ tests:
           labels: ["min_req", "network"]
           step: byoip_test
         StablePrivateIpCheck:
-          test_id: "SDN-XX-01"
+          test_id: "SDN11-01"
           labels: ["min_req", "network"]
           step: stable_ip_test
         StableEgressIpCheck:

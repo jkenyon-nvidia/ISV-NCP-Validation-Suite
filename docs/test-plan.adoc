@@ -114,8 +114,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/44[#44]
 | approved
 |
 
-| [[IMG-XX-01]]IMG-XX-01
-|
+| [[IMG01-01]]IMG01-01
+| IMG01
 |
 |
 |
@@ -128,8 +128,8 @@ a|
 | approved
 |
 
-| [[IMG-XX-02]]IMG-XX-02
-|
+| [[IMG02-01]]IMG02-01
+| IMG02
 |
 |
 |
@@ -142,8 +142,8 @@ a|
 | approved
 |
 
-| [[IMG-XX-03]]IMG-XX-03
-|
+| [[IMG03-01]]IMG03-01
+| IMG03
 |
 |
 |
@@ -159,8 +159,8 @@ a|
 .3+| Key Secret Mgmt
 .3+| Securely stores and manages cryptographic keys, secrets, and certificates. Supports key rotation
 .3+| AWS Secrets Manager / KMS
-| [[AUTH-XX-01]]AUTH-XX-01
-|
+| [[AUTH01-01]]AUTH01-01
+| AUTH01
 |
 |
 |
@@ -173,8 +173,8 @@ a|
 | approved
 |
 
-| [[AUTH-XX-02]]AUTH-XX-02
-|
+| [[AUTH02-01]]AUTH02-01
+| AUTH02
 | https://github.com/NVIDIA/ai-cloud-validation/issues/247[#247]
 | vm
 |
@@ -187,8 +187,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/247[#247]
 | approved
 |
 
-| [[AUTH-XX-03]]AUTH-XX-03
-|
+| [[AUTH03-01]]AUTH03-01
+| AUTH03
 | https://github.com/NVIDIA/ai-cloud-validation/issues/248[#248]
 |
 |
@@ -204,8 +204,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/248[#248]
 .3+| Identity and Asset Mgmt (IAM)
 .3+| Manages users, service identities, roles, and permissions across tenants and services. Forms the security foundation of the platform.
 .3+| AWS: IAM
-| [[IAM-XX-01]]IAM-XX-01
-|
+| [[IAM01-01]]IAM01-01
+| IAM01
 | https://github.com/NVIDIA/ai-cloud-validation/issues/21[#21]
 | iam, min_req
 |
@@ -218,8 +218,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/21[#21]
 | approved
 |
 
-| [[IAM-XX-02]]IAM-XX-02
-|
+| [[IAM02-01]]IAM02-01
+| IAM02
 | https://github.com/NVIDIA/ai-cloud-validation/issues/23[#23]
 |
 |
@@ -232,8 +232,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/23[#23]
 | approved
 |
 
-| [[IAM-XX-03]]IAM-XX-03
-|
+| [[IAM03-01]]IAM03-01
+| IAM03
 | https://github.com/NVIDIA/ai-cloud-validation/issues/341[#341]
 | iam
 |
@@ -249,8 +249,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/341[#341]
 .2+| DDI
 .2+| core network services for name resolution, IP allocation, and address lifecycle management
 .2+| GCP Cloud DNS + IPAM
-| [[CP-XX-01]]CP-XX-01
-|
+| [[IPAM01-01]]IPAM01-01
+| IPAM01
 | https://github.com/NVIDIA/ai-cloud-validation/issues/131[#131]
 | network, ssh
 |
@@ -263,8 +263,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/131[#131]
 | approved
 |
 
-| [[CP-XX-02]]CP-XX-02
-|
+| [[IPAM02-01]]IPAM02-01
+| IPAM02
 | https://github.com/NVIDIA/ai-cloud-validation/issues/132[#132]
 | network
 |
@@ -280,8 +280,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/132[#132]
 | Network Underlay & Mgmt
 | Brings up the physical network fabric for Day 0, base configuration, and network OS installation. Manages switch OS versions, compliance, and safe upgrades over time. Provides base network that overlays and tenants are built upon.
 | Netris
-| [[NETMGMT-XX-01]]NETMGMT-XX-01
-|
+| [[NETMGMT01-01]]NETMGMT01-01
+| NETMGMT01
 |
 |
 |
@@ -297,8 +297,8 @@ a|
 | Resource Database
 | Resource Inventory for useable resources withing the data center
 |
-| [[RESDB-XX-01]]RESDB-XX-01
-|
+| [[RESDB01-01]]RESDB01-01
+| RESDB01
 |
 |
 |
@@ -315,8 +315,8 @@ a|
 .9+| Control Plane accessible
 .9+| Control plane can be accessed
 .9+|
-| [[CP-XX-03]]CP-XX-03
-|
+| [[CP03-01]]CP03-01
+| CP03
 | https://github.com/NVIDIA/ai-cloud-validation/issues/26[#26]
 |
 |
@@ -330,8 +330,8 @@ https://github.com/NVIDIA/ai-cloud-validation/issues/27[#27]
 | approved
 |
 
-| [[CP-XX-04]]CP-XX-04
-|
+| [[CP04-01]]CP04-01
+| CP04
 | https://github.com/NVIDIA/ai-cloud-validation/issues/261[#261]
 |
 |
@@ -344,8 +344,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/261[#261]
 | approved
 |
 
-| [[CP-XX-05]]CP-XX-05
-|
+| [[CP05-01]]CP05-01
+| CP05
 | https://github.com/NVIDIA/ai-cloud-validation/issues/28[#28]
 | control_plane, iam
 |
@@ -358,8 +358,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/28[#28]
 | approved
 |
 
-| [[CP-XX-06]]CP-XX-06
-|
+| [[CP06-01]]CP06-01
+| CP06
 | https://github.com/NVIDIA/ai-cloud-validation/issues/29[#29]
 | control_plane, iam, min_req
 |
@@ -372,8 +372,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/29[#29]
 | approved
 |
 
-| [[CP-XX-07]]CP-XX-07
-|
+| [[CP07-01]]CP07-01
+| CP07
 | https://github.com/NVIDIA/ai-cloud-validation/issues/30[#30]
 | control_plane, iam
 |
@@ -386,8 +386,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/30[#30]
 | approved
 |
 
-| [[CP-XX-08]]CP-XX-08
-|
+| [[CP08-01]]CP08-01
+| CP08
 | https://github.com/NVIDIA/ai-cloud-validation/issues/31[#31]
 | control_plane, iam
 |
@@ -400,8 +400,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/31[#31]
 | approved
 |
 
-| [[CP-XX-09]]CP-XX-09
-|
+| [[CP09-01]]CP09-01
+| CP09
 | https://github.com/NVIDIA/ai-cloud-validation/issues/32[#32]
 | control_plane, iam
 |
@@ -415,8 +415,8 @@ https://github.com/NVIDIA/ai-cloud-validation/issues/33[#33]
 | approved
 |
 
-| [[CP-XX-10]]CP-XX-10
-|
+| [[CP10-01]]CP10-01
+| CP10
 | https://github.com/NVIDIA/ai-cloud-validation/issues/34[#34]
 | control_plane
 |
@@ -429,8 +429,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/34[#34]
 | approved
 |
 
-| [[CP-XX-11]]CP-XX-11
-|
+| [[CP11-01]]CP11-01
+| CP11
 | https://github.com/NVIDIA/ai-cloud-validation/issues/35[#35]
 | min_req
 |
@@ -446,8 +446,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/35[#35]
 .2+| Hardware ingestion
 .2+| Makes sure that all hardware under test has been ingested
 .2+|
-| [[HWING-XX-01]]HWING-XX-01
-|
+| [[HWING01-01]]HWING01-01
+| HWING01
 | https://github.com/NVIDIA/ai-cloud-validation/issues/133[#133]
 | bare_metal, ingestion
 |
@@ -460,8 +460,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/133[#133]
 | approved
 |
 
-| [[HWING-XX-02]]HWING-XX-02
-|
+| [[HWING02-01]]HWING02-01
+| HWING02
 |
 |
 |
@@ -491,8 +491,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/315[#315]
 | approved
 |
 
-| [[ATTEST-XX-01]]ATTEST-XX-01
-|
+| [[ATTEST01-01]]ATTEST01-01
+| ATTEST01
 | https://github.com/NVIDIA/ai-cloud-validation/issues/243[#243]
 |
 |
@@ -519,8 +519,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/316[#316]
 | approved
 |
 
-| [[ATTEST-XX-02]]ATTEST-XX-02
-|
+| [[ATTEST02-01]]ATTEST02-01
+| ATTEST02
 | https://github.com/NVIDIA/ai-cloud-validation/issues/319[#319]
 |
 |
@@ -665,8 +665,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/105[#105]
 | approved
 |
 
-| [[BMAAS-XX-01]]BMAAS-XX-01
-|
+| [[BMAAS01-01]]BMAAS01-01
+| BMAAS01
 |
 |
 | REVIEW
@@ -679,8 +679,8 @@ a|
 | pending
 |
 
-| [[BMAAS-XX-02]]BMAAS-XX-02
-|
+| [[BMAAS02-01]]BMAAS02-01
+| BMAAS02
 |
 |
 | REVIEW
@@ -695,8 +695,8 @@ a|
 
 .8+| Once created, nodes can be accessed for usage, and have the high level support controls of reboot, reinstall.
 .8+| AWS EC2/Forge
-| [[BMAAS-XX-03]]BMAAS-XX-03
-|
+| [[BMAAS03-01]]BMAAS03-01
+| BMAAS03
 | https://github.com/NVIDIA/ai-cloud-validation/issues/48[#48]
 | bare_metal, ssh
 |
@@ -739,8 +739,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/135[#135]
 | approved
 |
 
-| [[BMAAS-XX-04]]BMAAS-XX-04
-|
+| [[BMAAS04-01]]BMAAS04-01
+| BMAAS04
 | https://github.com/NVIDIA/ai-cloud-validation/issues/58[#58]
 |
 |
@@ -814,8 +814,8 @@ https://github.com/NVIDIA/ai-cloud-validation/issues/181[#181]
 
 .2+| Nodes will be able to access expected resources on the local networks
 .2+| AWS EC2/Forge
-| [[BMAAS-XX-05]]BMAAS-XX-05
-|
+| [[BMAAS05-01]]BMAAS05-01
+| BMAAS05
 | https://github.com/NVIDIA/ai-cloud-validation/issues/136[#136]
 | bare_metal, dpu
 |
@@ -828,8 +828,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/136[#136]
 | approved
 |
 
-| [[BMAAS-XX-06]]BMAAS-XX-06
-|
+| [[BMAAS06-01]]BMAAS06-01
+| BMAAS06
 | https://github.com/NVIDIA/ai-cloud-validation/issues/60[#60]
 | bare_metal, gpu, network, ssh
 |
@@ -844,8 +844,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/60[#60]
 
 .8+| Observability & Debug
 .8+| AWS EC2/Forge
-| [[BMAAS-XX-07]]BMAAS-XX-07
-|
+| [[BMAAS07-01]]BMAAS07-01
+| BMAAS07
 | https://github.com/NVIDIA/ai-cloud-validation/issues/250[#250]
 | bare_metal
 | REVIEW
@@ -873,8 +873,8 @@ https://github.com/NVIDIA/ai-cloud-validation/issues/114[#114]
 | approved
 |
 
-| [[BMAAS-XX-08]]BMAAS-XX-08
-|
+| [[BMAAS08-01]]BMAAS08-01
+| BMAAS08
 | https://github.com/NVIDIA/ai-cloud-validation/issues/61[#61]
 | bare_metal, gpu, ssh
 |
@@ -887,8 +887,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/61[#61]
 | approved
 |
 
-| [[BMAAS-XX-09]]BMAAS-XX-09
-|
+| [[BMAAS09-01]]BMAAS09-01
+| BMAAS09
 | https://github.com/NVIDIA/ai-cloud-validation/issues/63[#63]
 | bare_metal, gpu, min_req, ssh, workload
 |
@@ -902,8 +902,8 @@ https://github.com/NVIDIA/ai-cloud-validation/issues/68[#68]
 | approved
 |
 
-| [[BMAAS-XX-10]]BMAAS-XX-10
-|
+| [[BMAAS10-01]]BMAAS10-01
+| BMAAS10
 | https://github.com/NVIDIA/ai-cloud-validation/issues/64[#64]
 | bare_metal, gpu, min_req, slow, ssh, workload
 |
@@ -917,8 +917,8 @@ https://github.com/NVIDIA/ai-cloud-validation/issues/82[#82]
 | approved
 |
 
-| [[BMAAS-XX-11]]BMAAS-XX-11
-|
+| [[BMAAS11-01]]BMAAS11-01
+| BMAAS11
 | https://github.com/NVIDIA/ai-cloud-validation/issues/65[#65]
 | bare_metal, gpu, min_req, ssh, workload
 |
@@ -931,8 +931,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/65[#65]
 | approved
 |
 
-| [[BMAAS-XX-12]]BMAAS-XX-12
-|
+| [[BMAAS12-01]]BMAAS12-01
+| BMAAS12
 | https://github.com/NVIDIA/ai-cloud-validation/issues/66[#66]
 | bare_metal, gpu, min_req, ssh, workload
 |
@@ -1066,8 +1066,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/47[#47]
 
 .7+| Once created, VM nodes can be accessed for usage, and have the high level support controls of reboot, reinstall
 .7+|
-| [[VMAAS-XX-01]]VMAAS-XX-01
-|
+| [[VMAAS01-01]]VMAAS01-01
+| VMAAS01
 |
 | ssh, vm
 |
@@ -1094,8 +1094,8 @@ a|
 | approved
 |
 
-| [[VMAAS-XX-02]]VMAAS-XX-02
-|
+| [[VMAAS02-01]]VMAAS02-01
+| VMAAS02
 |
 |
 |
@@ -1166,8 +1166,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/113[#113]
 
 .2+| Quota should be enforced
 .2+|
-| [[VMAAS-XX-03]]VMAAS-XX-03
-|
+| [[VMAAS03-01]]VMAAS03-01
+| VMAAS03
 |
 |
 |
@@ -1180,8 +1180,8 @@ a|
 | approved
 |
 
-| [[VMAAS-XX-04]]VMAAS-XX-04
-|
+| [[VMAAS04-01]]VMAAS04-01
+| VMAAS04
 |
 |
 |
@@ -1196,8 +1196,8 @@ a|
 
 .6+| The underlying system allows VMs to access the GPU, with high performance, and are running with the correct parameters for optimal performance
 .6+|
-| [[VMAAS-XX-05]]VMAAS-XX-05
-|
+| [[VMAAS05-01]]VMAAS05-01
+| VMAAS05
 | https://github.com/NVIDIA/ai-cloud-validation/issues/55[#55]
 | ssh, vm
 |
@@ -1210,8 +1210,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/55[#55]
 | approved
 |
 
-| [[VMAAS-XX-06]]VMAAS-XX-06
-|
+| [[VMAAS06-01]]VMAAS06-01
+| VMAAS06
 | https://github.com/NVIDIA/ai-cloud-validation/issues/59[#59]
 | gpu, ssh, vm
 |
@@ -1224,8 +1224,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/59[#59]
 | approved
 |
 
-| [[VMAAS-XX-07]]VMAAS-XX-07
-|
+| [[VMAAS07-01]]VMAAS07-01
+| VMAAS07
 | https://github.com/NVIDIA/ai-cloud-validation/issues/62[#62]
 | gpu, ssh, vm
 |
@@ -1238,8 +1238,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/62[#62]
 | approved
 |
 
-| [[VMAAS-XX-08]]VMAAS-XX-08
-|
+| [[VMAAS08-01]]VMAAS08-01
+| VMAAS08
 |
 |
 |
@@ -1252,8 +1252,8 @@ a|
 | approved
 |
 
-| [[VMAAS-XX-09]]VMAAS-XX-09
-|
+| [[VMAAS09-01]]VMAAS09-01
+| VMAAS09
 | https://github.com/NVIDIA/ai-cloud-validation/issues/67[#67]
 | gpu, ssh, vm
 | Does this include GPU Passthrough
@@ -1266,8 +1266,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/67[#67]
 | approved
 |
 
-| [[VMAAS-XX-10]]VMAAS-XX-10
-|
+| [[VMAAS10-01]]VMAAS10-01
+| VMAAS10
 |
 |
 |
@@ -1282,8 +1282,8 @@ a|
 
 .3+| Can run AI/ML Jobs
 .3+|
-| [[VMAAS-XX-11]]VMAAS-XX-11
-|
+| [[VMAAS11-01]]VMAAS11-01
+| VMAAS11
 |
 |
 |
@@ -1296,8 +1296,8 @@ a|
 | approved
 |
 
-| [[VMAAS-XX-12]]VMAAS-XX-12
-|
+| [[VMAAS12-01]]VMAAS12-01
+| VMAAS12
 |
 | gpu, slow, ssh, vm, workload
 |
@@ -1310,8 +1310,8 @@ a|
 | approved
 |
 
-| [[VMAAS-XX-13]]VMAAS-XX-13
-|
+| [[VMAAS13-01]]VMAAS13-01
+| VMAAS13
 |
 |
 |
@@ -1326,8 +1326,8 @@ a|
 
 | nodes will be able to access expected resources on the local networks
 | AWS EC2/Forge
-| [[VMAAS-XX-14]]VMAAS-XX-14
-|
+| [[VMAAS14-01]]VMAAS14-01
+| VMAAS14
 |
 |
 |
@@ -1532,8 +1532,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/115[#115]
 | approved
 |
 
-| [[SDN-XX-01]]SDN-XX-01
-|
+| [[SDN11-01]]SDN11-01
+| SDN11
 | https://github.com/NVIDIA/ai-cloud-validation/issues/116[#116]
 | min_req, network
 |
@@ -1660,8 +1660,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/19[#19]
 | approved
 |
 
-| [[SDN-XX-02]]SDN-XX-02
-|
+| [[SDN12-01]]SDN12-01
+| SDN12
 |
 |
 |
@@ -1674,8 +1674,8 @@ a|
 | approved
 |
 
-| [[SDN-XX-03]]SDN-XX-03
-|
+| [[SDN13-01]]SDN13-01
+| SDN13
 |
 |
 |
@@ -1688,8 +1688,8 @@ a|
 | approved
 |
 
-| [[SDN-XX-04]]SDN-XX-04
-|
+| [[SDN14-01]]SDN14-01
+| SDN14
 |
 |
 |
@@ -1702,8 +1702,8 @@ a|
 | approved
 |
 
-| [[SDN-XX-05]]SDN-XX-05
-|
+| [[SDN15-01]]SDN15-01
+| SDN15
 |
 |
 |
@@ -1716,8 +1716,8 @@ a|
 | approved
 |
 
-| [[SDN-XX-06]]SDN-XX-06
-|
+| [[SDN16-01]]SDN16-01
+| SDN16
 |
 |
 |
@@ -1730,8 +1730,8 @@ a|
 | approved
 |
 
-| [[SDN-XX-07]]SDN-XX-07
-|
+| [[SDN17-01]]SDN17-01
+| SDN17
 |
 |
 |
@@ -1744,8 +1744,8 @@ a|
 | approved
 |
 
-| [[SDN-XX-08]]SDN-XX-08
-|
+| [[SDN18-01]]SDN18-01
+| SDN18
 |
 |
 |
@@ -1758,8 +1758,8 @@ a|
 | approved
 |
 
-| [[SDN-XX-09]]SDN-XX-09
-|
+| [[SDN19-01]]SDN19-01
+| SDN19
 |
 |
 |
@@ -1772,8 +1772,8 @@ a|
 | approved
 |
 
-| [[SDN-XX-10]]SDN-XX-10
-|
+| [[SDN20-01]]SDN20-01
+| SDN20
 |
 |
 |
@@ -1786,8 +1786,8 @@ a|
 | approved
 |
 
-| [[SDN-XX-11]]SDN-XX-11
-|
+| [[SDN21-01]]SDN21-01
+| SDN21
 |
 |
 |
@@ -1800,8 +1800,8 @@ a|
 | approved
 |
 
-| [[SDN-XX-12]]SDN-XX-12
-|
+| [[SDN22-01]]SDN22-01
+| SDN22
 |
 |
 |
@@ -1814,8 +1814,8 @@ a|
 | approved
 |
 
-| [[SDN-XX-13]]SDN-XX-13
-|
+| [[SDN23-01]]SDN23-01
+| SDN23
 |
 |
 |
@@ -1828,8 +1828,8 @@ a|
 | approved
 |
 
-| [[SDN-XX-14]]SDN-XX-14
-|
+| [[SDN24-01]]SDN24-01
+| SDN24
 |
 |
 |
@@ -1842,8 +1842,8 @@ a|
 | approved
 |
 
-| [[SDN-XX-15]]SDN-XX-15
-|
+| [[SDN25-01]]SDN25-01
+| SDN25
 |
 |
 |
@@ -1856,8 +1856,8 @@ a|
 | approved
 |
 
-| [[SDN-XX-16]]SDN-XX-16
-|
+| [[SDN26-01]]SDN26-01
+| SDN26
 |
 |
 |
@@ -1870,8 +1870,8 @@ a|
 | approved
 |
 
-| [[SDN-XX-17]]SDN-XX-17
-|
+| [[SDN27-01]]SDN27-01
+| SDN27
 |
 |
 |
@@ -1884,8 +1884,8 @@ a|
 | approved
 |
 
-| [[SDN-XX-18]]SDN-XX-18
-|
+| [[SDN28-01]]SDN28-01
+| SDN28
 |
 |
 | REVIEW
@@ -2049,8 +2049,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/292[#292]
 | Metadata Service
 | shared service source of truth for resource metadata such as nodes, GPUs, topology, and ownership. Enables scheduling, automation, and lifecycle management.
 | GCP Resource Manager APIs
-| [[META-XX-01]]META-XX-01
-|
+| [[META01-01]]META01-01
+| META01
 |
 |
 |
@@ -2066,8 +2066,8 @@ a|
 .4+| Cloud Control Plane
 .3+| Primary access mechanism for IaaS, provding provision and manage of compute, networking, and storage.
 .3+| AWS EC2 Control Plane
-| [[CTRL-XX-01]]CTRL-XX-01
-|
+| [[CTRL01-01]]CTRL01-01
+| CTRL01
 |
 |
 |
@@ -2127,8 +2127,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/205[#205]
 .4+| Load Balancing
 .4+| Distributes traffic across services (e.g. inference endpoints) for availability and scale.
 .4+| AWS Network Load Balancer
-| [[LB-XX-01]]LB-XX-01
-|
+| [[LB01-01]]LB01-01
+| LB01
 |
 |
 |
@@ -2141,8 +2141,8 @@ a|
 | approved
 |
 
-| [[LB-XX-02]]LB-XX-02
-|
+| [[LB02-01]]LB02-01
+| LB02
 |
 |
 |
@@ -2155,8 +2155,8 @@ a|
 | approved
 |
 
-| [[LB-XX-03]]LB-XX-03
-|
+| [[LB03-01]]LB03-01
+| LB03
 |
 |
 |
@@ -2169,8 +2169,8 @@ a|
 | approved
 |
 
-| [[LB-XX-04]]LB-XX-04
-|
+| [[LB04-01]]LB04-01
+| LB04
 |
 |
 |
@@ -2186,8 +2186,8 @@ a|
 .14+| Break-Fix
 .3+| A break-fix service works with a variety of components to detect, triage, remediate, and validate nodes in an AI factory. The critical focus here is on the GPU nodes, but the system can scale beyond.
 .3+| Lazarus, Shoreline
-| [[BFX-XX-01]]BFX-XX-01
-|
+| [[BFX04-01]]BFX04-01
+| BFX04
 |
 |
 |
@@ -2200,8 +2200,8 @@ a|
 | approved
 |
 
-| [[BFX-XX-02]]BFX-XX-02
-|
+| [[BFX05-01]]BFX05-01
+| BFX05
 |
 |
 |
@@ -2214,8 +2214,8 @@ a|
 | approved
 |
 
-| [[BFX-XX-03]]BFX-XX-03
-|
+| [[BFX06-01]]BFX06-01
+| BFX06
 |
 |
 |
@@ -2462,8 +2462,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/331[#331]
 | pending
 |
 
-| [[STOR-XX-01]]STOR-XX-01
-|
+| [[STOR01-01]]STOR01-01
+| STOR01
 |
 |
 | REVIEW
@@ -2786,8 +2786,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/340[#340]
 | Object Storage Service
 | durable, scalable object storage for things like datasets, model artifacts, logs, backups.
 | S3
-| [[DATASVC-XX-01]]DATASVC-XX-01
-|
+| [[DATASVC01-01]]DATASVC01-01
+| DATASVC01
 | https://github.com/NVIDIA/ai-cloud-validation/issues/262[#262]
 | control_plane, min_req
 |
@@ -2817,8 +2817,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/272[#272]
 | pending
 |
 
-| [[DATASVC-XX-02]]DATASVC-XX-02
-|
+| [[DATASVC02-01]]DATASVC02-01
+| DATASVC02
 | https://github.com/NVIDIA/ai-cloud-validation/issues/321[#321]
 | min_req
 |
@@ -2831,8 +2831,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/321[#321]
 | pending
 |
 
-| [[DATASVC-XX-03]]DATASVC-XX-03
-|
+| [[DATASVC03-01]]DATASVC03-01
+| DATASVC03
 | https://github.com/NVIDIA/ai-cloud-validation/issues/322[#322]
 | min_req
 |
@@ -2845,8 +2845,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/322[#322]
 | pending
 |
 
-| [[DATASVC-XX-04]]DATASVC-XX-04
-|
+| [[DATASVC04-01]]DATASVC04-01
+| DATASVC04
 | https://github.com/NVIDIA/ai-cloud-validation/issues/323[#323]
 | min_req
 |
@@ -2862,8 +2862,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/323[#323]
 | Cache Services
 | in-memory data store for frequently used data
 | ElastiCache
-| [[DATASVC-XX-05]]DATASVC-XX-05
-|
+| [[DATASVC05-01]]DATASVC05-01
+| DATASVC05
 |
 |
 |
@@ -2879,8 +2879,8 @@ a|
 | Vector Store
 | stores and indexes embeddings for semantic search and RAG generation
 | Vertex AI Vector Search
-| [[DATASVC-XX-06]]DATASVC-XX-06
-|
+| [[DATASVC06-01]]DATASVC06-01
+| DATASVC06
 |
 |
 |
@@ -2896,8 +2896,8 @@ a|
 | Relational Database
 | structured database (SQL) service
 | GCP Cloud SQL
-| [[DATASVC-XX-07]]DATASVC-XX-07
-|
+| [[DATASVC07-01]]DATASVC07-01
+| DATASVC07
 |
 |
 |
@@ -2914,8 +2914,8 @@ a|
 | Backup and Recovery
 | Centralized managed service to automate and govern data backup across services
 | AWS backup
-| [[DATASVC-XX-08]]DATASVC-XX-08
-|
+| [[DATASVC08-01]]DATASVC08-01
+| DATASVC08
 |
 |
 |
@@ -2931,8 +2931,8 @@ a|
 | Model Registry
 | storage with versioning for models and AI artifacts
 | AWS Sagemaker Model Registry
-| [[DATASVC-XX-09]]DATASVC-XX-09
-|
+| [[DATASVC09-01]]DATASVC09-01
+| DATASVC09
 |
 |
 |
@@ -2948,8 +2948,8 @@ a|
 .10+| Slurm Control Plane
 .10+| control plane to schedule and manage large-scale GPU batch training with SLURM semantics.
 .10+| AWS ParallelCluster
-| [[SLURM-XX-01]]SLURM-XX-01
-|
+| [[SLURM01-01]]SLURM01-01
+| SLURM01
 |
 |
 |
@@ -2962,8 +2962,8 @@ a|
 | done
 |
 
-| [[SLURM-XX-02]]SLURM-XX-02
-|
+| [[SLURM02-01]]SLURM02-01
+| SLURM02
 |
 | slurm
 |
@@ -2976,8 +2976,8 @@ a|
 | done
 |
 
-| [[SLURM-XX-03]]SLURM-XX-03
-|
+| [[SLURM03-01]]SLURM03-01
+| SLURM03
 |
 | slurm
 |
@@ -2990,8 +2990,8 @@ a|
 | done
 |
 
-| [[SLURM-XX-04]]SLURM-XX-04
-|
+| [[SLURM04-01]]SLURM04-01
+| SLURM04
 |
 | slurm
 |
@@ -3004,8 +3004,8 @@ a|
 | done
 |
 
-| [[SLURM-XX-05]]SLURM-XX-05
-|
+| [[SLURM05-01]]SLURM05-01
+| SLURM05
 |
 | slurm
 |
@@ -3018,8 +3018,8 @@ a|
 | done
 |
 
-| [[SLURM-XX-06]]SLURM-XX-06
-|
+| [[SLURM06-01]]SLURM06-01
+| SLURM06
 |
 | slurm
 |
@@ -3032,8 +3032,8 @@ a|
 | done
 |
 
-| [[SLURM-XX-07]]SLURM-XX-07
-|
+| [[SLURM07-01]]SLURM07-01
+| SLURM07
 |
 | gpu, slow, slurm, workload
 |
@@ -3046,8 +3046,8 @@ a|
 | done
 |
 
-| [[SLURM-XX-08]]SLURM-XX-08
-|
+| [[SLURM08-01]]SLURM08-01
+| SLURM08
 |
 | gpu, slow, slurm, workload
 |
@@ -3060,8 +3060,8 @@ a|
 | done
 |
 
-| [[SLURM-XX-09]]SLURM-XX-09
-|
+| [[SLURM09-01]]SLURM09-01
+| SLURM09
 |
 | slow, slurm, workload
 |
@@ -3074,8 +3074,8 @@ a|
 | done
 |
 
-| [[SLURM-XX-10]]SLURM-XX-10
-|
+| [[SLURM10-01]]SLURM10-01
+| SLURM10
 |
 |
 |
@@ -3107,8 +3107,8 @@ a|
 
 .3+| Full lifecycle management
 .3+|
-| [[K8S-XX-01]]K8S-XX-01
-|
+| [[K8S38-01]]K8S38-01
+| K8S38
 |
 | min_req
 |
@@ -3121,10 +3121,10 @@ a|
 | approved
 |
 
-| [[SEC23-01]]SEC23-01
-| SEC23
+| [[K8S41-01]]K8S41-01
+| K8S41
 |
-| min_req
+|
 |
 |
 a|
@@ -3165,8 +3165,8 @@ a|
 | approved
 |
 
-| [[K8S-XX-02]]K8S-XX-02
-|
+| [[K8S39-01]]K8S39-01
+| K8S39
 |
 | min_req
 |
@@ -3179,8 +3179,8 @@ a|
 | done
 |
 
-| [[K8S-XX-03]]K8S-XX-03
-|
+| [[K8S40-01]]K8S40-01
+| K8S40
 |
 | gpu, kubernetes, slow, workload
 |
@@ -3193,8 +3193,8 @@ a|
 | done
 |
 
-| [[K8S-XX-04]]K8S-XX-04
-|
+| [[K8S32-01]]K8S32-01
+| K8S32
 |
 | gpu, kubernetes, slow, workload
 |
@@ -3209,8 +3209,8 @@ a|
 
 | Topology based placement
 |
-| [[K8S-XX-05]]K8S-XX-05
-|
+| [[K8S33-01]]K8S33-01
+| K8S33
 |
 | gpu, kubernetes, min_req, slow, workload
 |
@@ -3225,8 +3225,8 @@ a|
 
 | k8s upstream proxy
 |
-| [[K8S-XX-06]]K8S-XX-06
-|
+| [[K8S34-01]]K8S34-01
+| K8S34
 |
 | min_req
 | k8s05
@@ -3305,8 +3305,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/218[#218]
 
 | TODO: L3 networking logging
 |
-| [[K8S-XX-07]]K8S-XX-07
-|
+| [[K8S35-01]]K8S35-01
+| K8S35
 |
 | min_req
 | K8s16
@@ -3607,8 +3607,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/302[#302]
 
 | Autoscaling
 |
-| [[K8S-XX-08]]K8S-XX-08
-|
+| [[K8S36-01]]K8S36-01
+| K8S36
 | https://github.com/NVIDIA/ai-cloud-validation/issues/267[#267]
 | kubernetes, min_req
 |
@@ -3715,8 +3715,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/225[#225]
 
 | Public OIDC Endpoint
 |
-| [[K8S18-01]]K8S18-01
-| K8S18
+| [[K8S17-02]]K8S17-02
+| K8S17
 | https://github.com/NVIDIA/ai-cloud-validation/issues/226[#226]
 | kubernetes, min_req
 |
@@ -3747,8 +3747,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/227[#227]
 
 | K8s Performance
 |
-| [[K8S-XX-09]]K8S-XX-09
-|
+| [[K8S37-01]]K8S37-01
+| K8S37
 | https://github.com/NVIDIA/ai-cloud-validation/issues/268[#268]
 | min_req
 |
@@ -3780,8 +3780,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/277[#277]
 | Power Policy Management
 | Control plane to manage power allocation (re-allocation) based on need and availability
 | Boost and Flex (DPS)
-| [[POWER-XX-01]]POWER-XX-01
-|
+| [[POWER01-01]]POWER01-01
+| POWER01
 |
 |
 |
@@ -3798,8 +3798,8 @@ a|
 | Host API Gateway
 | Service control plane "front door" that enforces authn/authz via IAM
 | AWS/GCP API Gateway
-| [[APIGW-XX-01]]APIGW-XX-01
-|
+| [[APIGW01-01]]APIGW01-01
+| APIGW01
 |
 |
 |
@@ -3815,8 +3815,8 @@ a|
 | Al Platform 1..N Control Planes
 | Placeholder for all AI platform CPs you might run. E.g. Run:ai, NVCF, Redhat Inference Server
 |
-| [[AICP-XX-01]]AICP-XX-01
-|
+| [[AICP01-01]]AICP01-01
+| AICP01
 |
 |
 |
@@ -3832,8 +3832,8 @@ a|
 | Web Management Dashboard
 |
 |
-| [[WEBUI-XX-01]]WEBUI-XX-01
-|
+| [[WEBUI01-01]]WEBUI01-01
+| WEBUI01
 |
 |
 |
@@ -3850,8 +3850,8 @@ a|
 .19+| Observability Collectors
 .4+|
 .4+|
-| [[OBS-XX-01]]OBS-XX-01
-|
+| [[OBS01-01]]OBS01-01
+| OBS01
 |
 |
 |
@@ -3864,8 +3864,8 @@ a|
 | done
 |
 
-| [[OBS-XX-02]]OBS-XX-02
-|
+| [[OBS02-01]]OBS02-01
+| OBS02
 |
 |
 |
@@ -3878,8 +3878,8 @@ a|
 | done
 |
 
-| [[OBS-XX-03]]OBS-XX-03
-|
+| [[OBS03-01]]OBS03-01
+| OBS03
 |
 |
 |
@@ -3892,8 +3892,8 @@ a|
 | done
 |
 
-| [[OBS-XX-04]]OBS-XX-04
-|
+| [[OBS04-01]]OBS04-01
+| OBS04
 |
 |
 |
@@ -3908,8 +3908,8 @@ a|
 
 | Telemetry Delivery
 |
-| [[OBS-XX-05]]OBS-XX-05
-|
+| [[OBS05-01]]OBS05-01
+| OBS05
 | https://github.com/NVIDIA/ai-cloud-validation/issues/342[#342]
 | min_req
 |
@@ -3924,8 +3924,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/342[#342]
 
 .5+| Network Telemetry
 .5+|
-| [[OBS-XX-06]]OBS-XX-06
-|
+| [[OBS06-01]]OBS06-01
+| OBS06
 | https://github.com/NVIDIA/ai-cloud-validation/issues/343[#343]
 | min_req
 |
@@ -3938,8 +3938,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/343[#343]
 | pending
 |
 
-| [[OBS-XX-07]]OBS-XX-07
-|
+| [[OBS07-01]]OBS07-01
+| OBS07
 | https://github.com/NVIDIA/ai-cloud-validation/issues/344[#344]
 | min_req
 |
@@ -3952,8 +3952,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/344[#344]
 | pending
 |
 
-| [[OBS-XX-08]]OBS-XX-08
-|
+| [[OBS08-01]]OBS08-01
+| OBS08
 | https://github.com/NVIDIA/ai-cloud-validation/issues/345[#345]
 | min_req
 |
@@ -3966,8 +3966,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/345[#345]
 | pending
 |
 
-| [[OBS-XX-09]]OBS-XX-09
-|
+| [[OBS09-01]]OBS09-01
+| OBS09
 | https://github.com/NVIDIA/ai-cloud-validation/issues/346[#346]
 | min_req
 |
@@ -3980,8 +3980,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/346[#346]
 | pending
 |
 
-| [[OBS-XX-10]]OBS-XX-10
-|
+| [[OBS10-01]]OBS10-01
+| OBS10
 | https://github.com/NVIDIA/ai-cloud-validation/issues/347[#347]
 | min_req
 |
@@ -3996,8 +3996,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/347[#347]
 
 .9+| Required Logs
 .9+|
-| [[OBS-XX-11]]OBS-XX-11
-|
+| [[OBS11-01]]OBS11-01
+| OBS11
 | https://github.com/NVIDIA/ai-cloud-validation/issues/348[#348]
 | min_req
 |
@@ -4010,8 +4010,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/348[#348]
 | pending
 |
 
-| [[OBS-XX-12]]OBS-XX-12
-|
+| [[OBS12-01]]OBS12-01
+| OBS12
 | https://github.com/NVIDIA/ai-cloud-validation/issues/349[#349]
 | min_req
 |
@@ -4024,8 +4024,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/349[#349]
 | pending
 |
 
-| [[OBS-XX-13]]OBS-XX-13
-|
+| [[OBS13-01]]OBS13-01
+| OBS13
 | https://github.com/NVIDIA/ai-cloud-validation/issues/350[#350]
 | min_req
 |
@@ -4038,8 +4038,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/350[#350]
 | pending
 |
 
-| [[OBS-XX-14]]OBS-XX-14
-|
+| [[OBS14-01]]OBS14-01
+| OBS14
 | https://github.com/NVIDIA/ai-cloud-validation/issues/351[#351]
 | min_req
 |
@@ -4052,8 +4052,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/351[#351]
 | pending
 |
 
-| [[OBS-XX-15]]OBS-XX-15
-|
+| [[OBS15-01]]OBS15-01
+| OBS15
 | https://github.com/NVIDIA/ai-cloud-validation/issues/352[#352]
 | min_req
 |
@@ -4066,8 +4066,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/352[#352]
 | pending
 |
 
-| [[OBS-XX-16]]OBS-XX-16
-|
+| [[OBS16-01]]OBS16-01
+| OBS16
 | https://github.com/NVIDIA/ai-cloud-validation/issues/353[#353]
 | min_req
 |
@@ -4080,8 +4080,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/353[#353]
 | pending
 |
 
-| [[OBS-XX-17]]OBS-XX-17
-|
+| [[OBS17-01]]OBS17-01
+| OBS17
 | https://github.com/NVIDIA/ai-cloud-validation/issues/354[#354]
 | min_req, observability, security
 |
@@ -4094,8 +4094,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/354[#354]
 | pending
 |
 
-| [[OBS-XX-18]]OBS-XX-18
-|
+| [[OBS18-01]]OBS18-01
+| OBS18
 | https://github.com/NVIDIA/ai-cloud-validation/issues/355[#355]
 | bare_metal, min_req, observability
 |
@@ -4108,8 +4108,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/355[#355]
 | pending
 |
 
-| [[OBS-XX-19]]OBS-XX-19
-|
+| [[OBS19-01]]OBS19-01
+| OBS19
 | https://github.com/NVIDIA/ai-cloud-validation/issues/356[#356]
 | min_req, network, observability
 |
@@ -4125,8 +4125,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/356[#356]
 .8+| Telemetry / Data Lakes
 .3+|
 .3+|
-| [[TELEM-XX-01]]TELEM-XX-01
-|
+| [[TELEM01-01]]TELEM01-01
+| TELEM01
 |
 |
 |
@@ -4139,8 +4139,8 @@ a|
 | approved
 |
 
-| [[TELEM-XX-02]]TELEM-XX-02
-|
+| [[TELEM02-01]]TELEM02-01
+| TELEM02
 | https://github.com/NVIDIA/ai-cloud-validation/issues/120[#120]
 | min_req
 | MinAPI
@@ -4153,8 +4153,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/120[#120]
 | approved
 |
 
-| [[TELEM-XX-03]]TELEM-XX-03
-|
+| [[TELEM03-01]]TELEM03-01
+| TELEM03
 | https://github.com/NVIDIA/ai-cloud-validation/issues/121[#121]
 | min_req
 | MinAPI
@@ -4169,8 +4169,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/121[#121]
 
 | BMC/Redfish Telemetry
 |
-| [[TELEM-XX-04]]TELEM-XX-04
-|
+| [[TELEM04-01]]TELEM04-01
+| TELEM04
 | https://github.com/NVIDIA/ai-cloud-validation/issues/362[#362]
 | gpu, min_req, observability, security
 |
@@ -4185,8 +4185,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/362[#362]
 
 .2+| Storage Telemetry
 .2+|
-| [[TELEM-XX-05]]TELEM-XX-05
-|
+| [[TELEM05-01]]TELEM05-01
+| TELEM05
 | https://github.com/NVIDIA/ai-cloud-validation/issues/363[#363]
 | min_req
 |
@@ -4199,8 +4199,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/363[#363]
 | pending
 |
 
-| [[TELEM-XX-06]]TELEM-XX-06
-|
+| [[TELEM06-01]]TELEM06-01
+| TELEM06
 | https://github.com/NVIDIA/ai-cloud-validation/issues/364[#364]
 | min_req
 |
@@ -4215,8 +4215,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/364[#364]
 
 .2+| NVLink Switch Telemetry
 .2+|
-| [[TELEM-XX-07]]TELEM-XX-07
-|
+| [[TELEM07-01]]TELEM07-01
+| TELEM07
 | https://github.com/NVIDIA/ai-cloud-validation/issues/365[#365]
 | min_req
 |
@@ -4229,8 +4229,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/365[#365]
 | pending
 |
 
-| [[TELEM-XX-08]]TELEM-XX-08
-|
+| [[TELEM08-01]]TELEM08-01
+| TELEM08
 | https://github.com/NVIDIA/ai-cloud-validation/issues/366[#366]
 | min_req
 |
@@ -4414,8 +4414,8 @@ a| https://github.com/NVIDIA/ai-cloud-validation/issues/293[#293]
 
 | In-Cluster Authentication
 |
-| [[SEC02-01]]SEC02-01
-| SEC02
+| [[SEC06-01]]SEC06-01
+| SEC06
 | https://github.com/NVIDIA/ai-cloud-validation/issues/294[#294]
 | iam, min_req, security
 |
@@ -4809,8 +4809,8 @@ a|
 | pending
 |
 
-| [[BENCH-XX-01]]BENCH-XX-01
-|
+| [[BENCH01-01]]BENCH01-01
+| BENCH01
 |
 |
 | REVIEW
@@ -4823,8 +4823,8 @@ a|
 | pending
 |
 
-| [[BENCH-XX-02]]BENCH-XX-02
-|
+| [[BENCH02-01]]BENCH02-01
+| BENCH02
 |
 |
 | REVIEW

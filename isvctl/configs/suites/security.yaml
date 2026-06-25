@@ -144,7 +144,7 @@ tests:
     short_lived_credentials:
       checks:
         ShortLivedCredentialsCheck:
-          test_id: "SEC02-01"
+          test_id: "SEC06-01"
           labels: ["iam", "min_req", "security"]
           step: short_lived_credentials_test
 
