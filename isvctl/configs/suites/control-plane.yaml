@@ -66,7 +66,7 @@ tests:
         # response. The data-path half is the CrudOperationsCheck in the
         # "s3_object_lifecycle" section, which declares the same test_id.
         FieldValueCheck:
-          test_id: "DATASVC-XX-01"
+          test_id: "DATASVC01-01"
           labels: ["control_plane", "min_req"]
           field: "success"
           expected: true
@@ -74,37 +74,37 @@ tests:
     setup_checks:
       checks:
         AccessKeyCreatedCheck:
-          test_id: "CP-XX-05"
+          test_id: "CP05-01"
           labels: ["control_plane", "iam"]
           step: create_access_key
         TenantCreatedCheck:
-          test_id: "CP-XX-07"
+          test_id: "CP07-01"
           labels: ["control_plane", "iam"]
           step: create_tenant
 
     access_key_lifecycle:
       checks:
         AccessKeyAuthenticatedCheck:
-          test_id: "CP-XX-05"
+          test_id: "CP05-01"
           labels: ["control_plane", "iam"]
           step: test_access_key
         AccessKeyDisabledCheck:
-          test_id: "CP-XX-06"
+          test_id: "CP06-01"
           labels: ["control_plane", "iam", "min_req"]
           step: disable_access_key
         AccessKeyRejectedCheck:
-          test_id: "CP-XX-06"
+          test_id: "CP06-01"
           labels: ["control_plane", "iam", "min_req"]
           step: verify_key_rejected
 
     tenant_lifecycle:
       checks:
         TenantListedCheck:
-          test_id: "CP-XX-08"
+          test_id: "CP08-01"
           labels: ["control_plane", "iam"]
           step: list_tenants
         TenantInfoCheck:
-          test_id: "CP-XX-09"
+          test_id: "CP09-01"
           labels: ["control_plane", "iam"]
           step: get_tenant
 
@@ -121,7 +121,7 @@ tests:
           labels: ["control_plane"]
           fields: ["bucket_name", "object_key", "operations"]
         CrudOperationsCheck:
-          test_id: "DATASVC-XX-01"
+          test_id: "DATASVC01-01"
           labels: ["control_plane", "min_req"]
           operations: ["put", "get", "delete"]
 
@@ -134,7 +134,7 @@ tests:
           labels: ["control_plane"]
           step: delete_access_key
         StepSuccessCheck-delete_tenant:
-          test_id: "CP-XX-10"
+          test_id: "CP10-01"
           labels: ["control_plane"]
           step: delete_tenant
 

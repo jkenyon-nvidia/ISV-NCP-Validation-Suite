@@ -52,7 +52,7 @@ tests:
       step: create_user
       checks:
         FieldExistsCheck:
-          test_id: "IAM-XX-01"
+          test_id: "IAM01-01"
           labels: ["iam", "min_req"]
           fields: ["username", "access_key_id"]
         StepSuccessCheck:
@@ -63,7 +63,7 @@ tests:
       step: test_credentials
       checks:
         FieldExistsCheck:
-          test_id: "IAM-XX-03"
+          test_id: "IAM03-01"
           labels: ["iam"]
           field: "account_id"
         StepSuccessCheck:

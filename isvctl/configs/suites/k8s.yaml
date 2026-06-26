@@ -212,7 +212,7 @@ tests:
           labels: ["kubernetes", "min_req"]
           require_dual_stack: "auto" # true | false | "auto"
         K8sClusterAutoscalerCheck:
-          test_id: "K8S-XX-08"
+          test_id: "K8S36-01"
           labels: ["kubernetes", "min_req"]
           require_autoscaler: false
           namespace: "{{ steps.setup.kubernetes.cluster_autoscaler_namespace | default('kube-system', true) }}"
@@ -300,7 +300,7 @@ tests:
     k8s_identity:
       checks:
         K8sOidcIssuerCheck:
-          test_id: "K8S18-01"
+          test_id: "K8S17-02"
           labels: ["kubernetes", "min_req"]
 
     k8s_conformance:
@@ -324,12 +324,12 @@ tests:
     k8s_workloads:
       checks:
         K8sNcclWorkload:
-          test_id: "K8S-XX-05"
+          test_id: "K8S33-01"
           labels: ["gpu", "kubernetes", "min_req", "slow", "workload"]
           min_bus_bw_gbps: 100
           timeout: 600
         K8sNcclMultiNodeWorkload:
-          test_id: "K8S-XX-05"
+          test_id: "K8S33-01"
           labels: ["gpu", "kubernetes", "min_req", "slow", "workload"]
           nodes: "{{ steps.setup.kubernetes.gpu_node_count | default(2, true) }}"
           min_bus_bw_gbps: 100
@@ -343,11 +343,11 @@ tests:
           runtime: 30
           timeout: 300
         K8sNimInferenceWorkload:
-          test_id: "K8S-XX-03"
+          test_id: "K8S40-01"
           labels: ["kubernetes", "gpu", "workload", "slow"]
           timeout: 1500
         K8sNimHelmWorkload-1b:
-          test_id: "K8S-XX-04"
+          test_id: "K8S32-01"
           labels: ["kubernetes", "gpu", "workload", "slow"]
           model: "meta/llama-3.2-1b-instruct"
           model_tag: "latest"
@@ -356,7 +356,7 @@ tests:
           genai_perf_requests: 100
           genai_perf_concurrency: 4
         K8sNimHelmWorkload-3b:
-          test_id: "K8S-XX-04"
+          test_id: "K8S32-01"
           labels: ["kubernetes", "gpu", "workload", "slow"]
           model: "meta/llama-3.2-3b-instruct"
           model_tag: "latest"

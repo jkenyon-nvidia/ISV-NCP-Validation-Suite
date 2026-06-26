@@ -112,7 +112,7 @@ tests:
       step: describe_instance
       checks:
         ConnectivityCheck:
-          test_id: "BMAAS-XX-03"
+          test_id: "BMAAS03-01"
           labels: ["bare_metal", "ssh"]
         OsCheck:
           # No BMaaS plan item for a host-OS image check (VMAAS-XX-05 is VM-only).
@@ -124,7 +124,7 @@ tests:
       step: describe_instance
       checks:
         GpuCheck:
-          test_id: "BMAAS-XX-08"
+          test_id: "BMAAS08-01"
           labels: ["bare_metal", "ssh", "gpu"]
           expected_gpus: 8
 
@@ -154,7 +154,7 @@ tests:
           test_id: "N/A"
           labels: ["bare_metal"]
         BmHostStatusLog:
-          test_id: "BMAAS-XX-07"
+          test_id: "BMAAS07-01"
           labels: ["bare_metal"]
 
     # GPU stress test - PyTorch matrix multiplications on all GPUs
@@ -162,7 +162,7 @@ tests:
       step: describe_instance
       checks:
         GpuStressCheck:
-          test_id: "BMAAS-XX-09"
+          test_id: "BMAAS09-01"
           labels: ["bare_metal", "gpu", "min_req", "ssh", "workload"]
           runtime: 30
           memory_gb: 16
@@ -172,7 +172,7 @@ tests:
       step: describe_instance
       checks:
         NcclCheck:
-          test_id: "BMAAS-XX-11"
+          test_id: "BMAAS11-01"
           labels: ["bare_metal", "gpu", "min_req", "ssh", "workload"]
 
     # DDP training workload - validates full training stack
@@ -180,7 +180,7 @@ tests:
       step: describe_instance
       checks:
         TrainingCheck:
-          test_id: "BMAAS-XX-12"
+          test_id: "BMAAS12-01"
           labels: ["bare_metal", "gpu", "min_req", "ssh", "workload"]
           steps: 50
 
@@ -189,21 +189,21 @@ tests:
       step: describe_instance
       checks:
         NvlinkCheck:
-          test_id: "BMAAS-XX-06"
+          test_id: "BMAAS06-01"
           labels: ["bare_metal", "ssh", "gpu", "network"]
 
     infiniband:
       step: describe_instance
       checks:
         InfiniBandCheck:
-          test_id: "BMAAS-XX-06"
+          test_id: "BMAAS06-01"
           labels: ["bare_metal", "gpu", "network", "ssh"]
 
     ethernet:
       step: describe_instance
       checks:
         EthernetCheck:
-          test_id: "BMAAS-XX-06"
+          test_id: "BMAAS06-01"
           labels: ["bare_metal", "gpu", "network", "ssh"]
           ping_target: "8.8.8.8"
 
@@ -256,7 +256,7 @@ tests:
       checks:
         # ConnectivityCheck -> BMAAS-XX-03, OsCheck -> N/A (declared in the "ssh" section)
         ConnectivityCheck:
-          test_id: "BMAAS-XX-03"
+          test_id: "BMAAS03-01"
           labels: ["bare_metal", "ssh"]
           host: "{{steps.describe_instance.public_ip}}"
           key_file: "{{steps.describe_instance.key_file}}"
@@ -272,7 +272,7 @@ tests:
       checks:
         # GpuCheck -> BMAAS-XX-08 (declared in the "gpu" section)
         GpuCheck:
-          test_id: "BMAAS-XX-08"
+          test_id: "BMAAS08-01"
           labels: ["bare_metal", "ssh", "gpu"]
           host: "{{steps.describe_instance.public_ip}}"
           key_file: "{{steps.describe_instance.key_file}}"
@@ -303,7 +303,7 @@ tests:
       checks:
         # ConnectivityCheck -> BMAAS-XX-03, OsCheck -> N/A (declared in the "ssh" section)
         ConnectivityCheck:
-          test_id: "BMAAS-XX-03"
+          test_id: "BMAAS03-01"
           labels: ["bare_metal", "ssh"]
           host: "{{steps.describe_instance.public_ip}}"
           key_file: "{{steps.describe_instance.key_file}}"
@@ -319,7 +319,7 @@ tests:
       checks:
         # GpuCheck -> BMAAS-XX-08 (declared in the "gpu" section)
         GpuCheck:
-          test_id: "BMAAS-XX-08"
+          test_id: "BMAAS08-01"
           labels: ["bare_metal", "ssh", "gpu"]
           host: "{{steps.describe_instance.public_ip}}"
           key_file: "{{steps.describe_instance.key_file}}"
@@ -351,7 +351,7 @@ tests:
       checks:
         # ConnectivityCheck -> BMAAS-XX-03, OsCheck -> N/A (declared in the "ssh" section)
         ConnectivityCheck:
-          test_id: "BMAAS-XX-03"
+          test_id: "BMAAS03-01"
           labels: ["bare_metal", "ssh"]
         OsCheck:
           test_id: "N/A"
@@ -363,7 +363,7 @@ tests:
       checks:
         # GpuCheck -> BMAAS-XX-08 (declared in the "gpu" section)
         GpuCheck:
-          test_id: "BMAAS-XX-08"
+          test_id: "BMAAS08-01"
           labels: ["bare_metal", "ssh", "gpu"]
           expected_gpus: 8
 
@@ -385,7 +385,7 @@ tests:
       checks:
         # ConnectivityCheck -> BMAAS-XX-03, OsCheck -> N/A (declared in the "ssh" section)
         ConnectivityCheck:
-          test_id: "BMAAS-XX-03"
+          test_id: "BMAAS03-01"
           labels: ["bare_metal", "ssh"]
         OsCheck:
           test_id: "N/A"
@@ -397,28 +397,28 @@ tests:
       checks:
         # GpuCheck -> BMAAS-XX-08 (declared in the "gpu" section)
         GpuCheck:
-          test_id: "BMAAS-XX-08"
+          test_id: "BMAAS08-01"
           labels: ["bare_metal", "ssh", "gpu"]
 
     nim_health:
       step: deploy_nim
       checks:
         NimHealthCheck:
-          test_id: "BMAAS-XX-10"
+          test_id: "BMAAS10-01"
           labels: ["bare_metal", "gpu", "min_req", "slow", "ssh", "workload"]
 
     nim_models:
       step: deploy_nim
       checks:
         NimModelCheck:
-          test_id: "BMAAS-XX-10"
+          test_id: "BMAAS10-01"
           labels: ["bare_metal", "gpu", "min_req", "slow", "ssh", "workload"]
 
     nim_inference:
       step: deploy_nim
       checks:
         NimInferenceCheck:
-          test_id: "BMAAS-XX-10"
+          test_id: "BMAAS10-01"
           labels: ["bare_metal", "gpu", "min_req", "slow", "ssh", "workload"]
           prompt: "What is CUDA?"
           max_tokens: 50
@@ -450,7 +450,7 @@ tests:
       step: verify_ingestion
       checks:
         HardwareIngestionCheck:
-          test_id: "HWING-XX-01"
+          test_id: "HWING01-01"
           labels: ["bare_metal", "ingestion"]
           min_machines: 1
           expected_status: ["Ready", "InUse"]
@@ -462,7 +462,7 @@ tests:
       step: check_dpu_health
       checks:
         DpuHealthCheck:
-          test_id: "BMAAS-XX-05"
+          test_id: "BMAAS05-01"
           labels: ["bare_metal", "dpu"]
           require_heartbeat: true
 
