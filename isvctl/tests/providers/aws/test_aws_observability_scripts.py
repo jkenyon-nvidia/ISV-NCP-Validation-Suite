@@ -675,6 +675,7 @@ class FakeCloudWatchClient:
         self.metrics = metrics
         self.statistics_sequence = list(statistics_sequence)
         self.list_dimensions: list[list[dict[str, str]]] = []
+        self.statistics_calls: list[dict[str, Any]] = []
 
     def list_metrics(self, *, Namespace: str, MetricName: str, Dimensions: list[dict[str, str]]) -> dict[str, Any]:
         """Record the requested dimensions and return the configured metrics."""
@@ -683,6 +684,7 @@ class FakeCloudWatchClient:
 
     def get_metric_statistics(self, **kwargs: Any) -> dict[str, Any]:
         """Return the next scripted datapoint batch, reusing the last when exhausted."""
+        self.statistics_calls.append(kwargs)
         datapoints = self.statistics_sequence.pop(0) if self.statistics_sequence else []
         return {"Datapoints": datapoints}
 
@@ -706,14 +708,13 @@ def test_telemetry_delivery_scopes_to_instance_and_passes() -> None:
         cloudwatch,
         network_id="vpc-123",
         instance_id="i-123",
-        max_delivery_seconds=300,
     )
 
     assert result["success"] is True
     assert cloudwatch.list_dimensions[0] == [{"Name": "InstanceId", "Value": "i-123"}]
     probes = result["tests"]["delivery_within_threshold"]["probes"]
     assert probes["probe_resource_id"] == "i-123"
-    assert probes["observed_delivery_seconds"] <= 300
+    assert probes["observed_delivery_seconds"] < 60
 
 
 def test_telemetry_delivery_polls_until_datapoint_appears() -> None:
@@ -734,7 +735,6 @@ def test_telemetry_delivery_polls_until_datapoint_appears() -> None:
         cloudwatch,
         network_id="vpc-123",
         instance_id="i-123",
-        max_delivery_seconds=300,
         poll_timeout_seconds=60,
         poll_interval_seconds=1,
         sleep=sleeps.append,
@@ -743,6 +743,35 @@ def test_telemetry_delivery_polls_until_datapoint_appears() -> None:
     assert result["success"] is True
     assert sleeps == [1]
     assert result["tests"]["delivery_sample_present"]["passed"] is True
+
+
+def test_telemetry_delivery_fails_fast_when_latency_exceeds_threshold() -> None:
+    """A stale-but-present datapoint fails the threshold check without polling."""
+    script = _load_script("telemetry_delivery_test.py")
+    metric = {
+        "Namespace": "AWS/EC2",
+        "MetricName": "NetworkPacketsIn",
+        "Dimensions": [{"Name": "InstanceId", "Value": "i-123"}],
+    }
+    cloudwatch = FakeCloudWatchClient(metrics=[metric], statistics_sequence=[[_recent_datapoint(300)]])
+    sleeps: list[float] = []
+
+    result = script.check_telemetry_delivery_latency(
+        cloudwatch,
+        network_id="vpc-123",
+        instance_id="i-123",
+        max_delivery_seconds=60,
+        poll_timeout_seconds=60,
+        poll_interval_seconds=1,
+        sleep=sleeps.append,
+    )
+
+    assert result["success"] is False
+    assert sleeps == []
+    assert result["tests"]["delivery_sample_present"]["passed"] is True
+    assert "exceeds" in result["tests"]["delivery_within_threshold"]["error"]
+    window = cloudwatch.statistics_calls[0]
+    assert (window["EndTime"] - window["StartTime"]).total_seconds() > 60
 
 
 def test_telemetry_delivery_fails_without_datapoints() -> None:
@@ -952,3 +981,148 @@ def test_teardown_vpc_flow_logs_reports_delete_failure_and_continues() -> None:
     assert result["cleanup_errors"][0]["resource_type"] == "flow_log_id"
     assert result["cleanup_errors"][0]["resource_id"] == "fl-123"
     assert result["cleanup_errors"][0]["error_type"] == "access_denied"
+
+
+class FakeDescribeInstancesWithVolumesEc2:
+    """Fake EC2 client returning attached EBS volumes for an instance."""
+
+    def __init__(self, *, volume_ids: list[str]) -> None:
+        """Initialize fake client state."""
+        self.volume_ids = volume_ids
+
+    def describe_instances(self, *, InstanceIds: list[str]) -> dict[str, Any]:
+        """Return an instance with the configured block device mappings."""
+        return {
+            "Reservations": [
+                {
+                    "Instances": [
+                        {"BlockDeviceMappings": [{"Ebs": {"VolumeId": volume_id}} for volume_id in self.volume_ids]}
+                    ]
+                }
+            ]
+        }
+
+
+def test_storage_performance_telemetry_scopes_to_instance_volumes() -> None:
+    """Storage performance probe scopes CloudWatch queries to attached EBS volumes."""
+    script = _load_script("storage_telemetry_test.py")
+    dimensions = [{"Name": "VolumeId", "Value": "vol-123"}]
+    metrics = [
+        {"Namespace": "AWS/EBS", "MetricName": "VolumeReadBytes", "Dimensions": dimensions},
+        {"Namespace": "AWS/EBS", "MetricName": "VolumeReadOps", "Dimensions": dimensions},
+        {"Namespace": "AWS/EBS", "MetricName": "VolumeTotalReadTime", "Dimensions": dimensions},
+    ]
+    cloudwatch = FakeCloudWatchClient(
+        metrics=metrics,
+        statistics_sequence=[[_recent_datapoint(30)], [_recent_datapoint(30)], [_recent_datapoint(30)]],
+    )
+
+    result = script._check_storage_performance_telemetry(
+        cloudwatch,
+        FakeDescribeInstancesWithVolumesEc2(volume_ids=["vol-123"]),
+        instance_id="i-123",
+    )
+
+    assert result["success"] is True
+    assert result["test_name"] == "storage_performance_telemetry"
+    probes = result["tests"]["samples_recent"]["probes"]
+    assert probes["volumes_checked"] == 1
+    assert probes["performance_kinds"] == ["bandwidth", "iops", "latency"]
+    assert probes["sample_count"] == 3
+
+
+def test_storage_performance_telemetry_fails_without_attached_volumes() -> None:
+    """Storage performance probe fails cleanly when the instance has no volumes."""
+    script = _load_script("storage_telemetry_test.py")
+    cloudwatch = FakeCloudWatchClient(metrics=[], statistics_sequence=[])
+
+    result = script._check_storage_performance_telemetry(
+        cloudwatch,
+        FakeDescribeInstancesWithVolumesEc2(volume_ids=[]),
+        instance_id="i-123",
+    )
+
+    assert result["success"] is False
+    assert "No EBS volumes" in result["error"]
+
+
+def test_storage_performance_telemetry_discovers_metrics_after_empty_list() -> None:
+    """Metrics appearing only after poll refresh still satisfy performance_metrics_present."""
+    script = _load_script("storage_telemetry_test.py")
+    dimensions = [{"Name": "VolumeId", "Value": "vol-123"}]
+    delayed_metrics = [
+        {"Namespace": "AWS/EBS", "MetricName": "VolumeReadBytes", "Dimensions": dimensions},
+        {"Namespace": "AWS/EBS", "MetricName": "VolumeReadOps", "Dimensions": dimensions},
+        {"Namespace": "AWS/EBS", "MetricName": "VolumeTotalReadTime", "Dimensions": dimensions},
+    ]
+    cloudwatch = FakeCloudWatchClient(
+        metrics=[],
+        statistics_sequence=[[_recent_datapoint(30)], [_recent_datapoint(30)], [_recent_datapoint(30)]],
+    )
+    sleeps: list[float] = []
+
+    def sleep_and_publish(seconds: float) -> None:
+        sleeps.append(seconds)
+        cloudwatch.metrics = delayed_metrics
+
+    result = script._check_storage_performance_telemetry(
+        cloudwatch,
+        FakeDescribeInstancesWithVolumesEc2(volume_ids=["vol-123"]),
+        instance_id="i-123",
+        poll_timeout_seconds=60,
+        poll_interval_seconds=1,
+        sleep=sleep_and_publish,
+    )
+
+    assert result["success"] is True
+    assert sleeps == [1]
+    probes = result["tests"]["performance_metrics_present"]["probes"]
+    assert probes["metric_names"] == [
+        "VolumeReadBytes",
+        "VolumeReadOps",
+        "VolumeTotalReadTime",
+    ]
+    assert probes["performance_kinds"] == ["bandwidth", "iops", "latency"]
+    assert result["tests"]["samples_recent"]["passed"] is True
+
+
+@pytest.mark.parametrize(
+    ("aspect", "expected_tests", "probe_field"),
+    [
+        (
+            "storage_capacity_telemetry",
+            {"telemetry_endpoint_reachable", "capacity_metrics_present", "samples_recent"},
+            "volumes_checked",
+        ),
+        (
+            "gpu_nvlink_telemetry",
+            {"telemetry_endpoint_reachable", "link_metrics_present", "samples_recent"},
+            "links_checked",
+        ),
+        (
+            "switch_nvlink_telemetry",
+            {"telemetry_endpoint_reachable", "port_metrics_present", "samples_recent"},
+            "ports_checked",
+        ),
+    ],
+)
+def test_telem_hidden_aspects_emit_provider_hidden_contract(
+    aspect: str, expected_tests: set[str], probe_field: str
+) -> None:
+    """AWS provider-hidden TELEM aspects report evidence instead of being excluded."""
+    if aspect == "storage_capacity_telemetry":
+        script = _load_script("storage_telemetry_test.py")
+        result = script._check_hidden_storage_capacity(region="us-west-2")
+    else:
+        script = _load_script("nvlink_telemetry_test.py")
+        result = script.check_provider_hidden_aspect(aspect, region="us-west-2")
+
+    assert result["success"] is True
+    assert result["platform"] == "observability"
+    assert result["test_name"] == aspect
+    assert set(result["tests"]) == expected_tests
+    for subtest in result["tests"].values():
+        assert subtest["passed"] is True
+        assert subtest["provider_hidden"] is True
+        assert subtest["probes"][probe_field] == 0
+        assert "provider-owned" in subtest["message"]
