@@ -2062,6 +2062,8 @@ domains:
             tests:
               - summary: Query serial numbers of installed hardware (chassis, baseboard, NICs, CPU, GPU) — obfuscated but stable IDs are OK
                 labels:
+                  - bare_metal
+                  - breakfix
                   - min_req
                 priority: P1
                 milestone: M5
@@ -2283,7 +2285,9 @@ domains:
                 status: pending
               - summary: Verify topology observability — visibility into failure domains for physical diversity
                 labels:
+                  - bare_metal
                   - min_req
+                  - sds_controller
                 priority: P1
                 milestone: M5
                 notes: ""
